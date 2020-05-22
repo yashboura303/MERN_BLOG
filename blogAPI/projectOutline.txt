@@ -1,0 +1,26 @@
+1. Create Blog Schema
+	Blog (String)
+	Published (Bool) ---> For users to see unpublished vs published post
+	Comments (Object)
+	User (Object)
+
+2. Create Comments Schema
+	Comment (String)
+	User (Object)
+	Date
+
+3. Ceate User Schema:
+	Name(String)
+	Email (string)
+	Password 
+	isAdmin (String)
+
+4. Sinup/Logout/Login User
+
+5. View Blogs without signin
+
+6. Write Blog with signin
+
+7. Allow admin to determine which blogs to be published or not
+
+8. Allow other users to comment on the blog
