@@ -8,6 +8,6 @@ const CommentSchema =
         user: { type: Schema.Types.ObjectId, ref: 'BlogUser' },
     });
 
-const Blog = mongoose.model('Blog', BlogSchema);
+const Comment = mongoose.model('Comments', CommentSchema);
 
-module.exports = Blog;
+module.exports = Comment;

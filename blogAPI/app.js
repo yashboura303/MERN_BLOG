@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -11,6 +12,7 @@ dotenv.config();
 
 
 var app = express();
+app.use(cors());
 
 const mongoDB = process.env.MONGO_ATLAS_KEY;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true , useCreateIndex:true});

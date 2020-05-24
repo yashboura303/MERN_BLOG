@@ -6,7 +6,7 @@ const comments = require('../controllers/comment.js');
 router.get('/blogs', blogs.getBlogs);
 router.get('/blogs/:_id', blogs.getUserBlogs);
 
-router.post('blogs'.blogs.createBlog);
+router.post('blogs',blogs.createBlog);
 router.post('/blogs/:id/addComment', comments.createComment);
 
 router.put('/blogs/like', blogs.likeBlog);
