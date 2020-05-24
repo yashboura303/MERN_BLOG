@@ -11,7 +11,6 @@ export default function Login() {
 	const [username, setUserName] = useState("");
 	const [password, setPassword] = useState("");
 	const [error, setErrorMessage] = useState("");
-	const [success, setSucessMessage] = useState("");
 
 	const onUserNameChange = (e) => setUserName(e.target.value);
 	const onPasswordChange = (e) => setPassword(e.target.value);
@@ -27,12 +26,9 @@ export default function Login() {
 		})
 			.then((response) => {
 				Cookie.set("token", response.data);
-				console.log(response);
 				setErrorMessage("");
-				setSucessMessage(response.data);
 			})
 			.catch((err) => {
-				setSucessMessage("");
 				setErrorMessage(err.response.data);
 			});
 	};
@@ -46,7 +42,6 @@ export default function Login() {
 		<div className="container w-50 my-5">
 			<h1 className="text-center text-info">Login</h1>
 			<ErrorMessage error={error} />
-			<SuccessMessage success={success} />
 			<Form onSubmit={onSubmit}>
 				<FormGroup>
 					<Label className="mr-sm-2">Username</Label>
