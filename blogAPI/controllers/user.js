@@ -1,4 +1,6 @@
 const User = require("../models/user.js");
+const Blog = require('../models/blog.js');
+
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const validateSchema = require("./validationSchemas/index.js");
@@ -6,7 +8,6 @@ const {
     loginValidation,
     registerValidation,
 } = require("./validationSchemas/index.js");
-const refreshTokens = [];
 
 exports.createUser = async (req, res, next) => {
     const { error } = registerValidation(req.body);
@@ -53,15 +54,14 @@ exports.login = async (req, res, next) => {
     const validPass = await bcrypt.compare(req.body.password, user.password);
     if (!validPass) return res.status(400).json("Incorrect Password");
 
+    const blogs = await Blog.findById(user._id).populate('comments');
     const token = jwt.sign(
         { _id: user._id },
         process.env.TOKEN_SECRET
     );
-    refreshTokens.push(token);
     res.cookie("token", token);
     res.header("auth-token", token);
-    res.json(token);
-    // res.send("loggged in!");
+    res.json({token, user});
 };
 
 exports.verify = (req, res, next) => {
