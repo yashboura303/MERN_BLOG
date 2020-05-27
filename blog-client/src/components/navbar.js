@@ -7,13 +7,15 @@ import {
 	Nav,
 	NavItem,
 } from "reactstrap";
+import Cookie from "js-cookie";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { logoutAction } from "../redux/actions.js";
 import { ReactComponent as ReactLogo } from "./logo.svg";
 
 // const token = Cookie.get("token") ? Cookie.get("token") : null;
 
-function NavComponent(isLoggedIn) {
+function NavComponent(props) {
 	const [isOpen, setIsOpen] = useState(true);
 
 	const toggle = () => setIsOpen(!isOpen);
@@ -34,8 +36,15 @@ function NavComponent(isLoggedIn) {
 		</div>
 	);
 
+	function logout() {
+		Cookie.remove("token");
+		Cookie.remove("user");
+		props.logoutAction();
+	}
+
 	function loggedInNav() {
-		if (isLoggedIn) {
+		if (props.isLoggedIn===false)
+		{
 			return (
 				<Nav className=" ml-auto" navbar>
 					<NavItem>
@@ -53,10 +62,13 @@ function NavComponent(isLoggedIn) {
 		}
 		return (
 			<Nav className=" ml-auto" navbar>
+				<NavItem className="my-auto">
+					Welcome {props.user.fullName} !
+				</NavItem>
 				<NavItem>
-					<Link className="nav-link" to="/login">
+					<button className="nav-link button-link" onClick={logout}>
 						Logout
-					</Link>
+					</button>
 				</NavItem>
 				<NavItem>
 					<Link className="nav-link" to="/signup">
@@ -69,8 +81,7 @@ function NavComponent(isLoggedIn) {
 }
 
 const mapStateToProps = (state) => {
-	const { isLoggedIn } = state;
-	return isLoggedIn;
+	return { isLoggedIn: state.isLoggedIn, user:state.user };
 };
 
-export default connect(mapStateToProps)(NavComponent);
+export default connect(mapStateToProps, { logoutAction })(NavComponent);

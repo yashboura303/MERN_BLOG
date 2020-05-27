@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
-import ErrorMessage from "./alerts/error.js";
 import Cookie from "js-cookie";
 import { connect } from "react-redux";
-import { loginAction } from '../redux/actions.js';
+import { loginAction } from "../redux/actions.js";
+import ErrorMessage from "./alerts/error.js";
 
 const axios = require("axios");
 
@@ -26,8 +26,8 @@ function Login(props) {
 		})
 			.then((response) => {
 				Cookie.set("token", response.data.token);
-				Cookie.set("user",response.data.user);
-				loginAction(response.data.user);
+				Cookie.set("user", response.data.user);
+				props.loginAction(response.data.user);
 				setErrorMessage("");
 				props.history.push("/");
 			})
@@ -72,4 +72,4 @@ function Login(props) {
 	);
 }
 
-export default connect(null, {loginAction})(Login)
+export default connect(null, { loginAction })(Login);
