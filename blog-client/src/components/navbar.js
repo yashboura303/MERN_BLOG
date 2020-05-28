@@ -21,7 +21,7 @@ function NavComponent(props) {
 	const toggle = () => setIsOpen(!isOpen);
 	return (
 		<div>
-			<Navbar color="light" light expand="md">
+			<Navbar color="dark" dark expand="md">
 				<NavbarBrand href="#">
 					<div className="d-inline my-auto">
 						<ReactLogo />
@@ -71,7 +71,7 @@ function NavComponent(props) {
 					</button>
 				</NavItem>
 				<NavItem>
-					<Link className="nav-link" to="/signup">
+					<Link className="nav-link" to="/addBlog">
 						Add Blog
 					</Link>
 				</NavItem>

@@ -30,5 +30,17 @@ const loginValidation = data => {
     return schema.validate(data);
 };
 
+const blogValidation = data => {
+    const schema = Joi.object({
+        blogTitile: Joi.string()
+            .required(),
+        blogBody: Joi.string()
+            .required()
+
+    });
+    return schema.validate(data);
+};
+
 module.exports.registerValidation = registerValidation;
 module.exports.loginValidation = loginValidation;
+module.exports.blogValidation = blogValidation;

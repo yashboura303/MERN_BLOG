@@ -26,7 +26,7 @@ function Login(props) {
 		})
 			.then((response) => {
 				Cookie.set("token", response.data.token);
-				Cookie.set("user", response.data.user);
+				Cookie.set("user", response.data.user._id);
 				props.loginAction(response.data.user);
 				setErrorMessage("");
 				props.history.push("/");

@@ -1,4 +1,5 @@
 const Blog = require('../models/blog.js');
+const {blogValidation} = require('./validationSchemas/index.js');
 
 exports.getBlogs = async (req, res, next) => {
     const blogs = await Blog.find({})
@@ -10,17 +11,21 @@ exports.getBlogs = async (req, res, next) => {
 };
 
 exports.createBlog = async (req, res, next) => {
-    const { blog, user } = req.body;
+    const { blogTitle, blogBody, user } = req.body;
+    const { error } = blogValidation({blogTitle, blogBody});
+    if (error) return res.status(400).json("All fields are required!");
 
     const newBlog = await new Blog({
-        blog,
+        body:blogTitle,
+        title:blogBody,
         user
     }).save(err => {
         if (err) {
-            res.status(500).send(err);
+            res.status(400).json(err);
         }
     });
-    res.send(newBLog);
+    console.log(blogTitle, blogBody, user);
+    res.json("Blog created!");
 };
 
 exports.getUserBlogs = async (req, res, next) => {
