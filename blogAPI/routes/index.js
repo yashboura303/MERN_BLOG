@@ -12,7 +12,7 @@ router.post('/blogs/:id/addComment',auth, comments.createComment);
 
 router.put('/blogs/like', auth,blogs.likeBlog);
 
-router.delete('/blogs/delete',auth, blogs.deleteBlog);
+router.delete('/blogs/delete/:_id',auth, blogs.deleteBlog);
 
 
 	
