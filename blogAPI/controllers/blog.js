@@ -16,24 +16,29 @@ exports.createBlog = async (req, res, next) => {
     if (error) return res.status(400).json("All fields are required!");
 
     const newBlog = await new Blog({
-        body:blogTitle,
-        title:blogBody,
+        body:blogBody,
+        title:blogTitle,
         user
     }).save(err => {
         if (err) {
             res.status(400).json(err);
         }
     });
-    console.log(blogTitle, blogBody, user);
     res.json("Blog created!");
 };
 
 exports.getUserBlogs = async (req, res, next) => {
     const user_id = req.params._id;
-    const blogs = await Blog.find({ user: user_id }, (err) => {
-        if (err) res.status(422).res.json(err);
+    try{
+
+    await Blog.find({ user: user_id }, (err, blogs) => {
+        if (err) res.status(422).json(err);
         res.json(blogs);
     }).sort('-date');
+    }
+    catch(error){
+        res.json(error);
+    }
 };
 
 exports.likeBlog = async (req, res, next) => {

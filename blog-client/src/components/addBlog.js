@@ -24,7 +24,6 @@ function AddBlog(props) {
 			},
 			headers:{
 				"Authorization":"Bearer "+Cookie.get('token')
-				// 'authorization':Cookie.get('token')
 			}
 		})
 			.then((response) => {

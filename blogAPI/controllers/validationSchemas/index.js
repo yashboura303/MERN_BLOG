@@ -32,7 +32,7 @@ const loginValidation = data => {
 
 const blogValidation = data => {
     const schema = Joi.object({
-        blogTitile: Joi.string()
+        blogTitle: Joi.string()
             .required(),
         blogBody: Joi.string()
             .required()

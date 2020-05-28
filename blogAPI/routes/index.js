@@ -5,14 +5,14 @@ const comments = require('../controllers/comment.js');
 const auth = require('../controllers/verifyToken.js');	
 /* GET home page. */
 router.get('/blogs', blogs.getBlogs);
-router.get('/blogs/:_id', blogs.getUserBlogs);
+router.get('/blogs/:_id', auth, blogs.getUserBlogs);
 
 router.post('/blogs',auth, blogs.createBlog);
-router.post('/blogs/:id/addComment', comments.createComment);
+router.post('/blogs/:id/addComment',auth, comments.createComment);
 
-router.put('/blogs/like', blogs.likeBlog);
+router.put('/blogs/like', auth,blogs.likeBlog);
 
-router.delete('/blogs/delete', blogs.deleteBlog);
+router.delete('/blogs/delete',auth, blogs.deleteBlog);
 
 
 	

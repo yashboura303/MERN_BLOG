@@ -9,15 +9,15 @@ import {
 } from "reactstrap";
 import Cookie from "js-cookie";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { logoutAction } from "../redux/actions.js";
 import { ReactComponent as ReactLogo } from "./logo.svg";
 
-// const token = Cookie.get("token") ? Cookie.get("token") : null;
+// const user_id = Cookie.get("user") ? Cookie.get("user") : null;
 
 function NavComponent(props) {
 	const [isOpen, setIsOpen] = useState(true);
-
+	const history = useHistory();
 	const toggle = () => setIsOpen(!isOpen);
 	return (
 		<div>
@@ -40,11 +40,11 @@ function NavComponent(props) {
 		Cookie.remove("token");
 		Cookie.remove("user");
 		props.logoutAction();
+		history.push("/");
 	}
 
 	function loggedInNav() {
-		if (props.isLoggedIn===false)
-		{
+		if (props.isLoggedIn === false) {
 			return (
 				<Nav className=" ml-auto" navbar>
 					<NavItem>
@@ -62,18 +62,23 @@ function NavComponent(props) {
 		}
 		return (
 			<Nav className=" ml-auto" navbar>
-				<NavItem className="my-auto">
+				<NavItem className="my-auto text-white">
 					Welcome {props.user.fullName} !
 				</NavItem>
 				<NavItem>
-					<button className="nav-link button-link" onClick={logout}>
-						Logout
-					</button>
+					<Link className="nav-link" to={`/blogs/${props.user._id}`}>
+						Your Blogs
+					</Link>
 				</NavItem>
 				<NavItem>
 					<Link className="nav-link" to="/addBlog">
 						Add Blog
 					</Link>
+				</NavItem>
+				<NavItem>
+					<button className="nav-link button-link" onClick={logout}>
+						Logout
+					</button>
 				</NavItem>
 			</Nav>
 		);
@@ -81,7 +86,7 @@ function NavComponent(props) {
 }
 
 const mapStateToProps = (state) => {
-	return { isLoggedIn: state.isLoggedIn, user:state.user };
+	return { isLoggedIn: state.isLoggedIn, user: state.user };
 };
 
 export default connect(mapStateToProps, { logoutAction })(NavComponent);
