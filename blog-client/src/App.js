@@ -19,7 +19,7 @@ const Routing = () => {
 			<Route path="/login" exact component={Login}></Route>
 			<Route path="/addBlog" exact component={AddBlog}></Route>
 			<Route path="/blogs/:id" exact component={UserBlogs}></Route>
-			<Route path="/blogs/blogs/:blog_id" exact component={Blog}></Route>
+			<Route path="/blog/:blog_id" exact component={Blog}></Route>
 		</Switch>
 	);
 };

@@ -12,7 +12,6 @@ exports.getBlogs = async (req, res, next) => {
 
 exports.createBlog = async (req, res, next) => {
     const { blogTitle, blogBody, user } = req.body;
-    console.log(user, blogTitle, blogBody);
     const { error } = blogValidation({ blogTitle, blogBody });
     if (error) return res.status(400).json("All fields are required!");
 
@@ -41,10 +40,11 @@ exports.getUserBlogs = async (req, res, next) => {
 exports.getBlogByID = async (req, res, next) => {
     const blog_id = req.params.blog_id;
     try {
-        await Blog.findById(blog_id, (err, blog) => {
-            if (err) res.status(422).json(err);
-            res.json(blog);
-        });
+        const blog = await Blog.findById(blog_id)
+            .lean()
+            .populate("comments")
+            .populate('user');
+        res.json(blog);
     } catch (error) {
         res.status(401).json(error);
     }
@@ -62,8 +62,6 @@ exports.likeBlog = async (req, res, next) => {
         }
     );
 };
-
-
 
 exports.deleteBlog = async (req, res, next) => {
     const blog_id = req.params._id;

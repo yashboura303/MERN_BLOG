@@ -6,10 +6,10 @@ const auth = require('../controllers/verifyToken.js');
 /* GET home page. */
 router.get('/blogs', blogs.getBlogs);
 router.get('/blogs/:user_id', auth, blogs.getUserBlogs);
-router.get('/blogs/blog/:blog_id', blogs.getBlogByID);
+router.get('/blog/:blog_id', blogs.getBlogByID);
 
 router.post('/blogs',auth, blogs.createBlog);
-router.post('/blogs/:id/addComment',auth, comments.createComment);
+router.post('/blog/addComment/:blog_id',auth, comments.createComment);
 
 router.put('/blogs/like', auth,blogs.likeBlog);
 

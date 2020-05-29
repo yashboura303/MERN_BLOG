@@ -1,6 +1,7 @@
 import React , { useEffect, useState }from "react";
 import { Spinner } from "reactstrap";
 import { ReactComponent as LikeIcon } from "./svgs/heart.svg";
+import { Link } from "react-router-dom";
 import { ReactComponent as DateIcon } from "./svgs/date.svg";
 const axios = require("axios");
 const moment = require("moment");
@@ -33,19 +34,21 @@ function Home() {
 				<div>
 					{blogs.map((blog) => (
 						<div
-							className="container border border-dark m-2 p-2"
+							className="container border border-dark m-4 p-2"
 							key={blog._id}
 						>
-							<h4 className="text-primary text-monospace font-weight-bold">
+							<Link
+							to={`/blog/${blog._id}`}
+						><h4 className="text-primary text-monospace font-weight-bold pointer">
 								{blog.title}
-							</h4>
-							<p>{blog.body}</p>
+							</h4></Link>
+							
 							<div className="container row justify-content-between">
 								<p style={{fontSize:"0.9rem"}}>
 								<DateIcon/> - 
 									{moment(blog.date).format("Do MMMM, YYYY")}
 								</p>
-								<p style={{fontSize:"0.9rem"}}><LikeIcon/> - {blog.likes.length}</p>
+								<p style={{fontSize:"0.9rem"}}><LikeIcon/>  {blog.likes.length}</p>
 							</div>
 						</div>
 					))}

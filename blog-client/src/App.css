@@ -14,3 +14,6 @@ Spinner {
 	width: 5rem;
 	height: 5rem;
 }
+.pointer{
+	cursor: pointer;
+}
