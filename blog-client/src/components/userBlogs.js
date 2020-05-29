@@ -8,11 +8,10 @@ const moment = require("moment");
 function UserBlogs(props) {
 	const [modal, setModal] = useState(false);
 	const [blogID, setBlogId] = useState(0);
-
-	const toggle = () => setModal(!modal);
-
 	const [blogs, setBlogs] = useState([]);
 	const [fetched, setFetched] = useState(false);
+
+	const toggle = () => setModal(!modal);
 	const deleteBlog = () => {
 		axios({
 			method: "delete",

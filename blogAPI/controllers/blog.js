@@ -27,7 +27,7 @@ exports.createBlog = async (req, res, next) => {
 };
 
 exports.getUserBlogs = async (req, res, next) => {
-    const user_id = req.params._id;
+    const user_id = req.params.user_id;
     try {
         await Blog.find({ user: user_id }, (err, blogs) => {
             if (err) res.status(422).json(err);
@@ -35,6 +35,18 @@ exports.getUserBlogs = async (req, res, next) => {
         }).sort("-date");
     } catch (error) {
         res.json(error);
+    }
+};
+
+exports.getBlogByID = async (req, res, next) => {
+    const blog_id = req.params.blog_id;
+    try {
+        await Blog.findById(blog_id, (err, blog) => {
+            if (err) res.status(422).json(err);
+            res.json(blog);
+        });
+    } catch (error) {
+        res.status(401).json(error);
     }
 };
 
@@ -50,6 +62,8 @@ exports.likeBlog = async (req, res, next) => {
         }
     );
 };
+
+
 
 exports.deleteBlog = async (req, res, next) => {
     const blog_id = req.params._id;

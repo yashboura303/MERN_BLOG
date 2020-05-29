@@ -9,7 +9,7 @@ const BlogSchema =
         date: { type: Date, default: Date.now },
         user: { type: Schema.Types.ObjectId, ref: 'BlogUser' },
         comments: [{ type: Schema.Types.ObjectId, ref: 'Comments' }],
-        likes:{type:Number, default:0}
+        likes:[{user:{ type: Schema.Types.ObjectId, ref: 'BlogUser' }}]
     });
 
 const Blog = mongoose.model('Blog', BlogSchema);

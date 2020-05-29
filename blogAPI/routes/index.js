@@ -5,7 +5,8 @@ const comments = require('../controllers/comment.js');
 const auth = require('../controllers/verifyToken.js');	
 /* GET home page. */
 router.get('/blogs', blogs.getBlogs);
-router.get('/blogs/:_id', auth, blogs.getUserBlogs);
+router.get('/blogs/:user_id', auth, blogs.getUserBlogs);
+router.get('/blogs/blog/:blog_id', blogs.getBlogByID);
 
 router.post('/blogs',auth, blogs.createBlog);
 router.post('/blogs/:id/addComment',auth, comments.createComment);

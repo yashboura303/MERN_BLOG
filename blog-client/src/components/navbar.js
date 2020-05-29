@@ -3,7 +3,6 @@ import {
 	Collapse,
 	Navbar,
 	NavbarToggler,
-	NavbarBrand,
 	Nav,
 	NavItem,
 } from "reactstrap";
@@ -11,7 +10,7 @@ import Cookie from "js-cookie";
 import { connect } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { logoutAction, loginAction } from "../redux/actions.js";
-import { ReactComponent as ReactLogo } from "./blog.svg";
+import { ReactComponent as ReactLogo } from "./svgs/blog.svg";
 
 
 function NavComponent(props) {
