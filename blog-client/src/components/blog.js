@@ -106,37 +106,37 @@ function Blog(props) {
                 </>
             );
         }
-        return (
-            <p className="font-italic font-weight-bold mt-2">
-                Login To Comment and Like!
-            </p>
-        );
     };
 
     const likeBlog = () => {
-        axios({
-            method: "put",
-            url: `http://localhost:8000/blog/like/${userBlog._id}`,
-            headers: {
-                Authorization: "Bearer " + Cookie.get("token"),
-            },
-            data: {
-                user_id: JSON.parse(Cookie.get("user"))._id,
-            },
-        })
-            .then(response => {
-                console.log(response.data);
-                setLikes(response.data);
+        if (Cookie.get("user")) {
+            axios({
+                method: "put",
+                url: `http://localhost:8000/blog/like/${userBlog._id}`,
+                headers: {
+                    Authorization: "Bearer " + Cookie.get("token"),
+                },
+                data: {
+                    user_id: JSON.parse(Cookie.get("user"))._id,
+                },
             })
-            .catch(err => {
-                console.log(err);
-            });
+                .then(response => {
+                    console.log(response.data);
+                    setLikes(response.data);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
     };
 
     const currentUserLiked = x => likes.find(like => like.user === x);
     const renderLike = () => {
         let likeIcon = null;
-        if (currentUserLiked(JSON.parse(Cookie.get("user"))._id)) {
+        if (
+            Cookie.get("user") &&
+            currentUserLiked(JSON.parse(Cookie.get("user"))._id)
+        ) {
             likeIcon = <LikeIcon className="mr-2 pointer" />;
         } else {
             likeIcon = (
@@ -160,6 +160,11 @@ function Blog(props) {
             </p>
             <hr></hr>
             <p style={{ fontSize: "1.1rem" }}>{userBlog.body}</p>
+            {Cookie.get("user") ? null : (
+                <p className="font-italic font-weight-bold mt-2">
+                    Login To Comment and Like!
+                </p>
+            )}
             {renderLike()}
             {renderComments()}
             {commentBox()}
