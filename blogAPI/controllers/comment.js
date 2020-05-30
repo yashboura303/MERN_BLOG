@@ -2,7 +2,6 @@ const Blog = require("../models/blog.js");
 const Comment = require("../models/comment.js");
 const mongoose = require("mongoose");
 
-
 exports.createComment = async (req, res, next) => {
     const { comment, user_name } = req.body;
     const blog_id = req.params.blog_id;
@@ -19,13 +18,13 @@ exports.createComment = async (req, res, next) => {
             }
             blog.comments.unshift(comment._id);
             const updatedBlog = await blog.save();
-            Blog.findById( blog_id )
+            Blog.findById(blog_id)
                 .populate("comments")
                 .populate("user")
-                .then((result) => {
+                .then(result => {
                     res.json(result.comments);
                 })
-                .catch((error) => {
+                .catch(error => {
                     res.status(501).json({ error });
                 });
         });

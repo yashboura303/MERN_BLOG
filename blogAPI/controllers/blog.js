@@ -37,30 +37,32 @@ exports.getUserBlogs = async (req, res, next) => {
     }
 };
 
-exports.getBlogByID = async (req, res, next) => {
+exports.getBlogByID = async (req, res) => {
     const blog_id = req.params.blog_id;
     try {
         const blog = await Blog.findById(blog_id)
-            .lean()
             .populate("comments")
-            .populate('user');
+            .populate("user");
+        console.log(blog);
         res.json(blog);
     } catch (error) {
         res.status(401).json(error);
     }
 };
 
-exports.likeBlog = async (req, res, next) => {
-    const blog_id = req.params._id;
-    const blog = await Blog.findByIdAndUpdate(
-        blog_id,
-        { $inc: { "blog.likes": 1 } },
-        { new: true },
-        (err) => {
-            if (err) res.status(422).res.json(err);
-            res.json(blog);
-        }
-    );
+exports.likeBlog = async (req, res) => {
+    const blog_id = req.params.blog_id;
+    const user_id = req.body.user_id;
+    const blog = await Blog.findById(blog_id);
+    blog.likes.unshift({ user: user_id });
+    await blog.save();
+    Blog.findById(blog_id)
+        .then(result => {
+            res.json(result.likes);
+        })
+        .catch(error => {
+            res.status(501).json({ error });
+        });
 };
 
 exports.deleteBlog = async (req, res, next) => {
@@ -70,3 +72,24 @@ exports.deleteBlog = async (req, res, next) => {
         res.json(blog);
     });
 };
+
+// exports.likeBlog = async (req, res) => {
+//   const blog_id = req.params.blog_id;
+//   const user_id = req.body.user_id;
+//   await Blog.findByIdAndUpdate(
+//     blog_id,
+//     {
+//       $push: {
+//         likes: {
+//           user: user_id,
+//         },
+//       },
+//     },
+//     { new: true },
+//     (err, newBlog) => {
+//       if (err) res.status(422).json(err);
+//       console.log(newBlog);
+//       res.json(newBlog.likes);
+//     }
+//   );
+// };

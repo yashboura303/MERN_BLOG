@@ -1,22 +1,18 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const blogs = require('../controllers/blog.js');
-const comments = require('../controllers/comment.js');
-const auth = require('../controllers/verifyToken.js');	
+const blogs = require("../controllers/blog.js");
+const comments = require("../controllers/comment.js");
+const auth = require("../controllers/verifyToken.js");
 /* GET home page. */
-router.get('/blogs', blogs.getBlogs);
-router.get('/blogs/:user_id', auth, blogs.getUserBlogs);
-router.get('/blog/:blog_id', blogs.getBlogByID);
+router.get("/blogs", blogs.getBlogs);
+router.get("/blogs/:user_id", auth, blogs.getUserBlogs);
+router.get("/blog/:blog_id", blogs.getBlogByID);
 
-router.post('/blogs',auth, blogs.createBlog);
-router.post('/blog/addComment/:blog_id',auth, comments.createComment);
+router.post("/blogs", auth, blogs.createBlog);
+router.post("/blog/addComment/:blog_id", auth, comments.createComment);
 
-router.put('/blogs/like', auth,blogs.likeBlog);
+router.put("/blog/like/:blog_id", auth, blogs.likeBlog);
 
-router.delete('/blogs/delete/:_id',auth, blogs.deleteBlog);
-
-
-	
-	
+router.delete("/blogs/delete/:_id", auth, blogs.deleteBlog);
 
 module.exports = router;
