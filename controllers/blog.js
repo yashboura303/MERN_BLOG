@@ -65,6 +65,22 @@ exports.likeBlog = async (req, res) => {
         });
 };
 
+exports.disLikeBlog = async (req, res) => {
+    const blog_id = req.params.blog_id;
+    const user_id = req.body.user_id;
+    const blog = await Blog.findById(blog_id);
+    const likeIndex = blog.likes.findIndex(like => like.user == user_id);
+    blog.likes.splice(likeIndex, 1);
+    await blog.save();
+    Blog.findById(blog_id)
+        .then(result => {
+            res.json(result.likes);
+        })
+        .catch(error => {
+            res.status(501).json({ error });
+        });
+};
+
 exports.deleteBlog = async (req, res, next) => {
     const blog_id = req.params._id;
     await Blog.deleteOne({ _id: blog_id }, (err, blog) => {

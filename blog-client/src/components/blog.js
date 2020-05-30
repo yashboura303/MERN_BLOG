@@ -19,7 +19,8 @@ function Blog(props) {
     const [likes, setLikes] = useState([]);
     const [comment, setComment] = useState("");
     const commentChange = e => setComment(e.target.value);
-    const submitComment = () => {
+    const submitComment = e => {
+        e.preventDefault();
         axios({
             method: "post",
             url: `http://localhost:8000/blog/addComment/${userBlog._id}`,
@@ -84,25 +85,28 @@ function Blog(props) {
         if (Cookie.get("user")) {
             return (
                 <>
-                    <FormGroup className="mb-2 mt-5 mr-sm-2 mb-sm-0">
-                        <Label for="exampleEmail" className="mr-sm-2">
-                            Add Comment:
-                        </Label>
-                        <Input
-                            type="textarea"
-                            onChange={commentChange}
-                            name="text"
-                            id="exampleText"
-                            value={comment}
-                        />
-                    </FormGroup>
-                    <Button
-                        color="success"
-                        onClick={submitComment}
-                        className="btn-sm mt-1"
-                    >
-                        Submit
-                    </Button>
+                    <form onSubmit={submitComment}>
+                        <FormGroup className="mb-2 mt-5 mr-sm-2 mb-sm-0">
+                            <Label for="exampleEmail" className="mr-sm-2">
+                                Add Comment:
+                            </Label>
+                            <Input
+                                type="textarea"
+                                onChange={commentChange}
+                                name="text"
+                                id="exampleText"
+                                value={comment}
+                                required
+                            />
+                        </FormGroup>
+                        <Button
+                            type="submit"
+                            color="success"
+                            className="btn-sm mt-1"
+                        >
+                            Submit
+                        </Button>
+                    </form>
                 </>
             );
         }
@@ -130,6 +134,28 @@ function Blog(props) {
         }
     };
 
+    const disLikeBlog = () => {
+        if (Cookie.get("user")) {
+            axios({
+                method: "put",
+                url: `http://localhost:8000/blog/disLike/${userBlog._id}`,
+                headers: {
+                    Authorization: "Bearer " + Cookie.get("token"),
+                },
+                data: {
+                    user_id: JSON.parse(Cookie.get("user"))._id,
+                },
+            })
+                .then(response => {
+                    console.log(response.data);
+                    setLikes(response.data);
+                    renderLike();
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+    };
     const currentUserLiked = x => likes.find(like => like.user === x);
     const renderLike = () => {
         let likeIcon = null;
@@ -137,7 +163,9 @@ function Blog(props) {
             Cookie.get("user") &&
             currentUserLiked(JSON.parse(Cookie.get("user"))._id)
         ) {
-            likeIcon = <LikeIcon className="mr-2 pointer" />;
+            likeIcon = (
+                <LikeIcon className="mr-2 pointer" onClick={disLikeBlog} />
+            );
         } else {
             likeIcon = (
                 <DisLikeIcon className="mr-2 pointer" onClick={likeBlog} />

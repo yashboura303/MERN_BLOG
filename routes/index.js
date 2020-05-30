@@ -12,6 +12,7 @@ router.post("/blogs", auth, blogs.createBlog);
 router.post("/blog/addComment/:blog_id", auth, comments.createComment);
 
 router.put("/blog/like/:blog_id", auth, blogs.likeBlog);
+router.put("/blog/dislike/:blog_id", auth, blogs.disLikeBlog);
 
 router.delete("/blogs/delete/:_id", auth, blogs.deleteBlog);
 
