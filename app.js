@@ -7,7 +7,6 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
-const path = require("path");
 const dotenv = require("dotenv");
 dotenv.config();
 
