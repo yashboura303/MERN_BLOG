@@ -1,20 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import Cookie from "js-cookie";
 import { connect } from "react-redux";
 import { loginAction } from "../redux/actions.js";
-import ErrorMessage from "./alerts/error.js";
+import { errorAlertAction, clearAlertAction } from "../redux/actions.js";
+import Alert from "./alert";
 
 const axios = require("axios");
 
 function Login(props) {
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setErrorMessage] = useState("");
 
     const onUserNameChange = e => setUserName(e.target.value);
     const onPasswordChange = e => setPassword(e.target.value);
 
+    useEffect(() => {
+        props.clearAlertAction();
+    }, []);
     const signIn = () => {
         axios({
             method: "post",
@@ -29,11 +32,10 @@ function Login(props) {
                 Cookie.set("user", JSON.stringify(response.data.user));
                 Cookie.set("username", response.data.user.username);
                 props.loginAction(response.data.user);
-                setErrorMessage("");
                 props.history.push("/");
             })
             .catch(err => {
-                setErrorMessage(err.response.data);
+                props.errorAlertAction(err.response.data);
             });
     };
 
@@ -45,7 +47,7 @@ function Login(props) {
     return (
         <div className="container w-50 my-5">
             <h1 className="text-center text-info">Login</h1>
-            <ErrorMessage error={error} />
+            <Alert />
             <Form onSubmit={onSubmit}>
                 <FormGroup>
                     <Label className="mr-sm-2">Username</Label>
@@ -73,4 +75,8 @@ function Login(props) {
     );
 }
 
-export default connect(null, { loginAction })(Login);
+export default connect(null, {
+    loginAction,
+    errorAlertAction,
+    clearAlertAction,
+})(Login);

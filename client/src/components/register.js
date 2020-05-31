@@ -1,21 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
-import ErrorMessage from "./alerts/error.js";
-import SuccessMessage from "./alerts/success.js";
+import { connect } from "react-redux";
+import {
+    errorAlertAction,
+    successAlertAction,
+    clearAlertAction,
+} from "../redux/actions.js";
+import Alert from "./alert";
 const axios = require("axios");
 
-export default function Register() {
+function Register(props) {
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
-    const [error, setErrorMessage] = useState("");
-    const [success, setSucessMessage] = useState("");
 
     const onUserNameChange = e => setUserName(e.target.value);
     const onPasswordChange = e => setPassword(e.target.value);
     const onNameChange = e => setName(e.target.value);
     const onEmailChange = e => setEmail(e.target.value);
+
+    useEffect(() => {
+        props.clearAlertAction();
+    }, []);
 
     const register = () => {
         axios({
@@ -29,12 +36,10 @@ export default function Register() {
             },
         })
             .then(response => {
-                setErrorMessage("");
-                setSucessMessage(response.data);
+                props.successAlertAction(response.data);
             })
             .catch(err => {
-                setSucessMessage("");
-                setErrorMessage(err.response.data);
+                props.errorAlertAction(err.response.data);
             });
     };
 
@@ -46,8 +51,7 @@ export default function Register() {
     return (
         <div className="container w-50 my-5">
             <h1 className="text-center text-info">Register</h1>
-            <ErrorMessage error={error} />
-            <SuccessMessage success={success} />
+            <Alert />
             <Form onSubmit={onSubmit}>
                 <FormGroup>
                     <Label className="mr-sm-2">Name</Label>
@@ -90,3 +94,8 @@ export default function Register() {
         </div>
     );
 }
+export default connect(null, {
+    successAlertAction,
+    errorAlertAction,
+    clearAlertAction,
+})(Register);
