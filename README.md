@@ -8,7 +8,7 @@
 3. Make sure you have `npm` Node.js installed in your system. MongoAtlas is used, so no need for local MongoDB setup.
 4. MongoAtlas Setup
 https://www.youtube.com/watch?v=7CqJlxBYj-M&feature=youtu.be&t=293
-Set up your .env file and paste in the URI that you get from following the instructions in the video above. Also set token secret to anything used for jwt authentication.
+Set up your .env file and paste in the URI that you get from following the instructions in the video above. Also set token secret to anything, it is used for jwt authentication.
 
 ```
 MONGO_ATLAS_KEY=mongodb+srv://<dbUser>:<password>@cluster0-m5jph.gcp.mongodb.net/test?retryWrites=true&w=majority
