@@ -17,9 +17,9 @@ TOKEN_SECRET=
 You need to remember to paste in the <dbUser> and <password>. Do NOT share it publicly, and do NOT include the .env file in commits.
 
 5. [Only once] Run (from the root) `npm install` and `cd client && npm install`.
-6. Un-comment line 30 in app.js (root folder) and comment line 24 & line 35-37.(This is to run app locally, please suggest better way if you know) 
-6 .Open two terminal windows (one for running Server and other for the UI).
-7 .To run server, from root folder run `nodemon start` and to run client, go to client directory and run `npm start`
-8 .Go to `http://localhost:3000` to see the application running.
+6. Un-comment line 30 in app.js (root folder) and comment line 24 & line 35-37.(This is to run app locally, please suggest better way if you know).
+7 .Open two terminal windows (one for running Server and other for the UI).
+8 .To run server, from root folder run `nodemon start` and to run client, go to client directory and run `npm start`.
+9 .Go to `http://localhost:3000` to see the application running.
 
 
