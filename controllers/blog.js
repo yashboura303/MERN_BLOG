@@ -43,7 +43,6 @@ exports.getBlogByID = async (req, res) => {
         const blog = await Blog.findById(blog_id)
             .populate("comments")
             .populate("user");
-        console.log(blog);
         res.json(blog);
     } catch (error) {
         res.status(401).json(error);
