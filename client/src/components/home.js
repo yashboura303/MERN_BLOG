@@ -22,8 +22,8 @@ function Home() {
                 console.log(err.response);
             });
     };
-    useEffect(async () => {
-        await fetchAllBlogs();
+    useEffect(() => {
+        fetchAllBlogs();
     }, []);
     function showBlogs() {
         if (blogs.length === 0 && fetched)

@@ -56,8 +56,8 @@ function Blog(props) {
                 console.log(err.response);
             });
     };
-    useEffect(async () => {
-        await fetchUserBlog();
+    useEffect(() => {
+        fetchUserBlog();
     }, []);
     const renderComments = () => {
         const renderedComments = comments.map(comment => (
