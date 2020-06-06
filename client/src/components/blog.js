@@ -39,8 +39,8 @@ function Blog(props) {
                 console.log(err.response.data);
             });
     };
-    const fetchUserBlog = () => {
-        axios({
+    const fetchUserBlog = async () => {
+        await axios({
             method: "get",
             url: `/blog/${props.match.params.blog_id}`,
             headers: {
