@@ -9,8 +9,8 @@ const moment = require("moment");
 function Home() {
     const [blogs, setBlogs] = useState([]);
     const [fetched, setFetched] = useState(false);
-    const fetchAllBlogs = () => {
-        axios({
+    const fetchAllBlogs = async () => {
+        await axios({
             method: "get",
             url: `/blogs`,
         })
@@ -22,8 +22,8 @@ function Home() {
                 console.log(err.response);
             });
     };
-    useEffect(() => {
-        fetchAllBlogs();
+    useEffect(async () => {
+        await fetchAllBlogs();
     }, []);
     function showBlogs() {
         if (blogs.length === 0 && fetched)
