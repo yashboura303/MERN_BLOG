@@ -4,7 +4,7 @@ const blogs = require("../controllers/blog.js");
 const comments = require("../controllers/comment.js");
 const auth = require("../controllers/verifyToken.js");
 /* GET home page. */
-router.get("/blogs", blogs.getBlogs);
+router.get("/", blogs.getBlogs);
 router.get("/blogs/:user_id", auth, blogs.getUserBlogs);
 router.get("/blog/:blog_id", blogs.getBlogByID);
 

@@ -12,7 +12,7 @@ function Home() {
     const fetchAllBlogs = async () => {
         await axios({
             method: "get",
-            url: `/blogs`,
+            url: `/`,
         })
             .then(response => {
                 setBlogs(response.data);
