@@ -56,9 +56,11 @@ function Blog(props) {
                 console.log(err.response);
             });
     };
+
     useEffect(() => {
         fetchUserBlog();
     }, []);
+
     const renderComments = () => {
         const renderedComments = comments.map(comment => (
             <ListGroupItem className="bg-light" key={comment._id}>
