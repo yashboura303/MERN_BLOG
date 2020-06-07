@@ -18,10 +18,10 @@ function Login(props) {
     useEffect(() => {
         props.clearAlertAction();
     }, []);
-    const signIn = () => {
-        axios({
+    const signIn = async () => {
+        await axios({
             method: "post",
-            url: "/users/login",
+            url: "/api/users/login",
             data: {
                 username,
                 password,

@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-import Cookie from "js-cookie";
+import { connect } from "react-redux";
 import NavBar from "./components/navbar";
 import Login from "./components/login";
 import Home from "./components/home";
@@ -11,19 +11,10 @@ import UserBlogs from "./components/userBlogs";
 import Blog from "./components/blog";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const Routing = () => {
-    let routes = (
-        <Switch>
-            <Route path="/" exact component={Home}></Route>
-            <Route path="/login" exact component={Login}></Route>
-            <Route path="/signup" exact component={Register}></Route>
-            <Route path="/blog/:blog_id" exact component={Blog}></Route>
-            <Redirect to="/"></Redirect>
-        </Switch>
-    );
-
-    if (Cookie.get("user")) {
-        routes = (
+const routing = props => {
+    console.log(props);
+    if (props.isLoggedIn) {
+        return (
             <Switch>
                 <Route path="/" exact component={Home}></Route>
                 <Route path="/addBlog" exact component={AddBlog}></Route>
@@ -33,14 +24,28 @@ const Routing = () => {
             </Switch>
         );
     }
-    return <>{routes}</>;
+    return (
+        <Switch>
+            <Route path="/" exact component={Home}></Route>
+            <Route path="/login" exact component={Login}></Route>
+            <Route path="/signup" exact component={Register}></Route>
+            <Route path="/blog/:blog_id" exact component={Blog}></Route>
+            <Redirect to="/"></Redirect>
+        </Switch>
+    );
 };
 
-export default function App() {
+function App(props) {
     return (
         <BrowserRouter>
             <NavBar />
-            <Routing />
+            {routing(props)}
         </BrowserRouter>
     );
 }
+const mapStateToProps = state => {
+    return {
+        isLoggedIn: state.auth.isLoggedIn,
+    };
+};
+export default connect(mapStateToProps)(App);

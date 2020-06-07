@@ -24,10 +24,10 @@ function Register(props) {
         props.clearAlertAction();
     }, []);
 
-    const register = () => {
-        axios({
+    const register = async () => {
+        await axios({
             method: "post",
-            url: "/users",
+            url: "/api/users",
             data: {
                 username,
                 password,

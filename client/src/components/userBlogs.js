@@ -14,7 +14,7 @@ function UserBlogs(props) {
     const deleteBlog = () => {
         axios({
             method: "delete",
-            url: `/blogs/delete/${blogID}`,
+            url: `/api/blogs/delete/${blogID}`,
             headers: {
                 Authorization: "Bearer " + Cookie.get("token"),
             },
@@ -34,10 +34,10 @@ function UserBlogs(props) {
         setModal(!modal);
         deleteBlog();
     };
-    const fetchUserBlogs = () => {
-        axios({
+    const fetchUserBlogs = async () => {
+        await axios({
             method: "get",
-            url: `/blogs/${props.match.params.id}`,
+            url: `/api/blogs/${props.match.params.id}`,
             headers: {
                 Authorization: "Bearer " + Cookie.get("token"),
             },

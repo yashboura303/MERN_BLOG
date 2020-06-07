@@ -12,13 +12,14 @@ function Home() {
     const fetchAllBlogs = async () => {
         await axios({
             method: "get",
-            url: `/`,
+            url: "/api/blogs",
         })
             .then(response => {
                 setBlogs(response.data);
                 setFetched(true);
             })
             .catch(err => {
+                setFetched(true);
                 console.log(err.response);
             });
     };

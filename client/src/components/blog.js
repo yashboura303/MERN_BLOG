@@ -23,7 +23,7 @@ function Blog(props) {
         e.preventDefault();
         axios({
             method: "post",
-            url: `/blog/addComment/${userBlog._id}`,
+            url: `/api/blog/addComment/${userBlog._id}`,
             headers: {
                 Authorization: "Bearer " + Cookie.get("token"),
             },
@@ -42,7 +42,7 @@ function Blog(props) {
     const fetchUserBlog = async () => {
         await axios({
             method: "get",
-            url: `/blog/${props.match.params.blog_id}`,
+            url: `/api/blog/${props.match.params.blog_id}`,
             headers: {
                 Authorization: "Bearer " + Cookie.get("token"),
             },
@@ -118,7 +118,7 @@ function Blog(props) {
         if (Cookie.get("user")) {
             axios({
                 method: "put",
-                url: `/blog/like/${userBlog._id}`,
+                url: `/api/blog/like/${userBlog._id}`,
                 headers: {
                     Authorization: "Bearer " + Cookie.get("token"),
                 },
@@ -140,7 +140,7 @@ function Blog(props) {
         if (Cookie.get("user")) {
             axios({
                 method: "put",
-                url: `/blog/disLike/${userBlog._id}`,
+                url: `/api/blog/disLike/${userBlog._id}`,
                 headers: {
                     Authorization: "Bearer " + Cookie.get("token"),
                 },

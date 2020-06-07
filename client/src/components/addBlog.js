@@ -3,6 +3,7 @@ import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { connect } from "react-redux";
 import Cookie from "js-cookie";
 import { successAlertAction, clearAlertAction } from "../redux/actions.js";
+import Alert from "./alert";
 const axios = require("axios");
 
 function AddBlog(props) {
@@ -11,11 +12,11 @@ function AddBlog(props) {
     const onTitleChange = e => setTitle(e.target.value);
     const onBodyChange = e => setBody(e.target.value);
 
-    const createBlog = () => {
+    const createBlog = async () => {
         const user_id = JSON.parse(Cookie.get("user"));
-        axios({
+        await axios({
             method: "post",
-            url: "/blogs",
+            url: "/api/blogs",
             data: {
                 blogTitle: title,
                 blogBody: body,
@@ -41,8 +42,7 @@ function AddBlog(props) {
     return (
         <div className="container">
             <h1 className="text-center text-info">Create New Blog</h1>
-            {/* <ErrorMessage error={error} />
-            <SuccessMessage success={success} /> */}
+            <Alert />
             <Form onSubmit={onSubmit}>
                 <FormGroup className="w-50">
                     <Label>Blog Title</Label>
