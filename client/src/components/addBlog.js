@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { connect } from "react-redux";
 import Cookie from "js-cookie";
@@ -12,6 +12,12 @@ function AddBlog(props) {
     const onTitleChange = e => setTitle(e.target.value);
     const onBodyChange = e => setBody(e.target.value);
 
+    useEffect(() => {
+        if (!Cookie.get("user")) {
+            props.history.push("/");
+        }
+        props.clearAlertAction();
+    }, []);
     const createBlog = async () => {
         const user_id = JSON.parse(Cookie.get("user"));
         await axios({

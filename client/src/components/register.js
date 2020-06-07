@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { connect } from "react-redux";
+import Cookie from "js-cookie";
 import {
     errorAlertAction,
     successAlertAction,
@@ -22,6 +23,9 @@ function Register(props) {
 
     useEffect(() => {
         props.clearAlertAction();
+        if (Cookie.get("user")) {
+            props.history.push("/");
+        }
     }, []);
 
     const register = async () => {

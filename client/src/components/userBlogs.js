@@ -51,6 +51,9 @@ function UserBlogs(props) {
             });
     };
     useEffect(() => {
+        if (!Cookie.get("user")) {
+            props.history.push("/");
+        }
         fetchUserBlogs();
     }, []);
 

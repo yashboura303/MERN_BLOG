@@ -12,24 +12,14 @@ import Blog from "./components/blog";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const routing = props => {
-    console.log(props);
-    if (props.isLoggedIn) {
-        return (
-            <Switch>
-                <Route path="/" exact component={Home}></Route>
-                <Route path="/addBlog" exact component={AddBlog}></Route>
-                <Route path="/blogs/:id" exact component={UserBlogs}></Route>
-                <Route path="/blog/:blog_id" exact component={Blog}></Route>
-                <Redirect to="/"></Redirect>
-            </Switch>
-        );
-    }
     return (
         <Switch>
             <Route path="/" exact component={Home}></Route>
+            <Route path="/addBlog" exact component={AddBlog}></Route>
+            <Route path="/blogs/:id" exact component={UserBlogs}></Route>
+            <Route path="/blog/:blog_id" exact component={Blog}></Route>
             <Route path="/login" exact component={Login}></Route>
             <Route path="/signup" exact component={Register}></Route>
-            <Route path="/blog/:blog_id" exact component={Blog}></Route>
             <Redirect to="/"></Redirect>
         </Switch>
     );

@@ -15,6 +15,7 @@ function Home() {
             url: "/api/blogs",
         })
             .then(response => {
+                console.log(response.data);
                 setBlogs(response.data);
                 setFetched(true);
             })

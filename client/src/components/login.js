@@ -17,6 +17,9 @@ function Login(props) {
 
     useEffect(() => {
         props.clearAlertAction();
+        if (Cookie.get("user")) {
+            props.history.push("/");
+        }
     }, []);
     const signIn = async () => {
         await axios({
