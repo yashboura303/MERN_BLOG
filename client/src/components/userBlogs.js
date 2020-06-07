@@ -34,6 +34,13 @@ function UserBlogs(props) {
         setModal(!modal);
         deleteBlog();
     };
+    useEffect(() => {
+        console.log("hihihihih");
+        if (!Cookie.get("user")) {
+            props.history.push("/");
+        }
+        fetchUserBlogs();
+    }, []);
     const fetchUserBlogs = async () => {
         await axios({
             method: "get",
@@ -50,12 +57,6 @@ function UserBlogs(props) {
                 console.log(err.response);
             });
     };
-    useEffect(() => {
-        if (!Cookie.get("user")) {
-            props.history.push("/");
-        }
-        fetchUserBlogs();
-    }, []);
 
     function showBlogs() {
         if (blogs.length === 0 && fetched)
