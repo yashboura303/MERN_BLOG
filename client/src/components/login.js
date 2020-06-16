@@ -8,7 +8,8 @@ import Alert from "./alert";
 
 const axios = require("axios");
 
-function Login(props) {
+function Login({ clearAlertAction, errorAlertAction, loginAction, history }) {
+    // {clearAlertAction} = props
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
 
@@ -16,11 +17,11 @@ function Login(props) {
     const onPasswordChange = e => setPassword(e.target.value);
 
     useEffect(() => {
-        props.clearAlertAction();
+        clearAlertAction();
         if (Cookie.get("user")) {
-            props.history.push("/");
+            history.push("/");
         }
-    }, []);
+    }, [clearAlertAction, history]);
     const signIn = async () => {
         await axios({
             method: "post",
@@ -34,11 +35,11 @@ function Login(props) {
                 Cookie.set("token", response.data.token);
                 Cookie.set("user", JSON.stringify(response.data.user));
                 Cookie.set("username", response.data.user.username);
-                props.loginAction(response.data.user);
-                props.history.push("/");
+                loginAction(response.data.user);
+                history.push("/");
             })
             .catch(err => {
-                props.errorAlertAction(err.response.data);
+                errorAlertAction(err.response.data);
             });
     };
 

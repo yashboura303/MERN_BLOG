@@ -6,17 +6,17 @@ import { Link, useHistory } from "react-router-dom";
 import { logoutAction, loginAction } from "../redux/actions.js";
 import { ReactComponent as ReactLogo } from "./svgs/blog.svg";
 
-function NavComponent(props) {
+function NavComponent({ loginAction, logoutAction, isLoggedIn, user }) {
     const [isOpen, setIsOpen] = useState(true);
     const history = useHistory();
     const toggle = () => setIsOpen(!isOpen);
     useEffect(() => {
         if (Cookie.get("user")) {
-            props.loginAction(JSON.parse(Cookie.get("user")));
+            loginAction(JSON.parse(Cookie.get("user")));
         } else {
-            props.logoutAction();
+            logoutAction();
         }
-    }, []);
+    }, [loginAction, logoutAction]);
 
     return (
         <div>
@@ -39,12 +39,12 @@ function NavComponent(props) {
         Cookie.remove("token");
         Cookie.remove("user");
         Cookie.remove("username");
-        props.logoutAction();
+        logoutAction();
         history.push("/");
     }
 
     function loggedInNav() {
-        if (props.isLoggedIn) {
+        if (isLoggedIn) {
             return (
                 <Nav className=" ml-auto" navbar>
                     <NavItem className="my-auto text-white mx-2">
@@ -53,10 +53,7 @@ function NavComponent(props) {
                         </h5>
                     </NavItem>
                     <NavItem>
-                        <Link
-                            className="nav-link"
-                            to={`/blogs/${props.user._id}`}
-                        >
+                        <Link className="nav-link" to={`/blogs/${user._id}`}>
                             <h5 className="d-inline">Your Blogs</h5>
                         </Link>
                     </NavItem>

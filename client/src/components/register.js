@@ -10,7 +10,12 @@ import {
 import Alert from "./alert";
 const axios = require("axios");
 
-function Register(props) {
+function Register({
+    successAlertAction,
+    errorAlertAction,
+    clearAlertAction,
+    history,
+}) {
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
@@ -22,11 +27,11 @@ function Register(props) {
     const onEmailChange = e => setEmail(e.target.value);
 
     useEffect(() => {
-        props.clearAlertAction();
+        clearAlertAction();
         if (Cookie.get("user")) {
-            props.history.push("/");
+            history.push("/");
         }
-    }, []);
+    }, [clearAlertAction, history]);
 
     const register = async () => {
         await axios({
@@ -40,10 +45,10 @@ function Register(props) {
             },
         })
             .then(response => {
-                props.successAlertAction(response.data);
+                successAlertAction(response.data);
             })
             .catch(err => {
-                props.errorAlertAction(err.response.data);
+                errorAlertAction(err.response.data);
             });
     };
 

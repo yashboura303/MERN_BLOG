@@ -6,7 +6,7 @@ import { successAlertAction, clearAlertAction } from "../redux/actions.js";
 import Alert from "./alert";
 const axios = require("axios");
 
-function AddBlog(props) {
+function AddBlog({ successAlertAction, clearAlertAction, history }) {
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
     const onTitleChange = e => setTitle(e.target.value);
@@ -14,10 +14,10 @@ function AddBlog(props) {
 
     useEffect(() => {
         if (!Cookie.get("user")) {
-            props.history.push("/");
+            history.push("/");
         }
-        props.clearAlertAction();
-    }, []);
+        clearAlertAction();
+    }, [history, clearAlertAction]);
     const createBlog = async () => {
         const user_id = JSON.parse(Cookie.get("user"));
         await axios({
@@ -34,7 +34,7 @@ function AddBlog(props) {
         })
             .then(response => {
                 console.log(response.data);
-                props.successAlertAction("Blog created");
+                successAlertAction("Blog created");
             })
             .catch(err => {
                 console.log("Errror", err.response);
