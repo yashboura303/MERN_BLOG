@@ -20,6 +20,22 @@ function UserBlogs(props) {
             },
         })
             .then(response => {
+                async function fetchUserBlogs() {
+                    await axios({
+                        method: "get",
+                        url: `/api/blogs/${props.match.params.id}`,
+                        headers: {
+                            Authorization: "Bearer " + Cookie.get("token"),
+                        },
+                    })
+                        .then(response => {
+                            setBlogs(response.data);
+                            setFetched(true);
+                        })
+                        .catch(err => {
+                            console.log(err.response);
+                        });
+                }
                 fetchUserBlogs();
             })
             .catch(err => {
@@ -35,28 +51,27 @@ function UserBlogs(props) {
         deleteBlog();
     };
     useEffect(() => {
-        console.log("hihihihih");
         if (!Cookie.get("user")) {
             props.history.push("/");
         }
-        fetchUserBlogs();
-    }, []);
-    const fetchUserBlogs = async () => {
-        await axios({
-            method: "get",
-            url: `/api/blogs/${props.match.params.id}`,
-            headers: {
-                Authorization: "Bearer " + Cookie.get("token"),
-            },
-        })
-            .then(response => {
-                setBlogs(response.data);
-                setFetched(true);
+        async function fetchUserBlogs() {
+            await axios({
+                method: "get",
+                url: `/api/blogs/${props.match.params.id}`,
+                headers: {
+                    Authorization: "Bearer " + Cookie.get("token"),
+                },
             })
-            .catch(err => {
-                console.log(err.response);
-            });
-    };
+                .then(response => {
+                    setBlogs(response.data);
+                    setFetched(true);
+                })
+                .catch(err => {
+                    console.log(err.response);
+                });
+        }
+        fetchUserBlogs();
+    }, [props.history, props.match.params.id]);
 
     function showBlogs() {
         if (blogs.length === 0 && fetched)
