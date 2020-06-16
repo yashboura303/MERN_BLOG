@@ -39,27 +39,27 @@ function Blog(props) {
                 console.log(err.response.data);
             });
     };
-    const fetchUserBlog = async () => {
-        await axios({
-            method: "get",
-            url: `/api/blog/${props.match.params.blog_id}`,
-            headers: {
-                Authorization: "Bearer " + Cookie.get("token"),
-            },
-        })
-            .then(response => {
-                setBlog(response.data);
-                setComments(response.data.comments);
-                setLikes(response.data.likes);
-            })
-            .catch(err => {
-                console.log(err.response);
-            });
-    };
 
     useEffect(() => {
+        async function fetchUserBlog() {
+            await axios({
+                method: "get",
+                url: `/api/blog/${props.match.params.blog_id}`,
+                headers: {
+                    Authorization: "Bearer " + Cookie.get("token"),
+                },
+            })
+                .then(response => {
+                    setBlog(response.data);
+                    setComments(response.data.comments);
+                    setLikes(response.data.likes);
+                })
+                .catch(err => {
+                    console.log(err.response);
+                });
+        }
         fetchUserBlog();
-    }, []);
+    }, [props.match.params.blog_id]);
 
     const renderComments = () => {
         const renderedComments = comments.map(comment => (
