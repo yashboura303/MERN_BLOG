@@ -1,7 +1,7 @@
 # MERN_BLOG
 # [Live](https://mernbloggingapp.herokuapp.com/)
 ### Front-End - React + Redux
-### Back-End - Node.js, Express.js & MongoDB
+### Back-End - Node.js(Express.js) & MongoDB
 
 ## Set-Up Project in your machine
 1. Fork the repo and clone it.
