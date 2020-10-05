@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.css";
+import "./sass/App.scss";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import NavBar from "./components/navbar";
