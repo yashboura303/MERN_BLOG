@@ -58,6 +58,14 @@ body {
         background-color: #050505 !important;
         transition: background-color 0.25s ease-out;
     }
+    .navbar {
+        .nav-item {
+            button {
+                background-color: #525353;
+                border-color: #525353;
+            }
+        }
+    }
 }
 .navbar {
     .navbar-nav {
