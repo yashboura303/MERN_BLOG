@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import {
+    RiLockPasswordLine,
+    RiUserLine,
+    RiMailLine,
+    RiContactsBook2Line,
+} from "react-icons/ri";
+
 import { connect } from "react-redux";
 import Cookie from "js-cookie";
 import {
@@ -58,12 +65,15 @@ function Register({
     };
 
     return (
-        <div className="container w-50 my-5">
-            <h1 className="text-center text-info">Register</h1>
+        <div className="container w-50 my-4 p-0 p-sm-5 py-5 py-sm-0  register">
+            <h1 className="text-center my-2">Register</h1>
             <Alert />
-            <Form onSubmit={onSubmit}>
-                <FormGroup>
-                    <Label className="mr-sm-2">Name</Label>
+            <Form onSubmit={onSubmit} className="w-75 mx-auto">
+                <FormGroup className="w-75 mx-auto">
+                    <Label className="mr-sm-2">
+                        Name
+                        <RiContactsBook2Line className="ml-1" />
+                    </Label>
                     <Input
                         type="text"
                         placeholder="name"
@@ -71,8 +81,10 @@ function Register({
                         value={name}
                     />
                 </FormGroup>
-                <FormGroup>
-                    <Label className="mr-sm-2">Email</Label>
+                <FormGroup className="w-75 mx-auto">
+                    <Label className="mr-sm-2">
+                        Email <RiMailLine className="ml-1" />
+                    </Label>
                     <Input
                         type="email"
                         placeholder="email"
@@ -80,8 +92,10 @@ function Register({
                         value={email}
                     />
                 </FormGroup>
-                <FormGroup>
-                    <Label className="mr-sm-2">Username</Label>
+                <FormGroup className="w-75 mx-auto">
+                    <Label className="mr-sm-2">
+                        Username <RiUserLine className="ml-1" />
+                    </Label>
                     <Input
                         type="text"
                         placeholder="username"
@@ -89,8 +103,10 @@ function Register({
                         value={username}
                     />
                 </FormGroup>
-                <FormGroup>
-                    <Label className="mr-sm-2">Password</Label>
+                <FormGroup className="w-75 mx-auto">
+                    <Label className="mr-sm-2">
+                        Password <RiLockPasswordLine className="ml-1" />
+                    </Label>
                     <Input
                         type="password"
                         onChange={onPasswordChange}
@@ -98,7 +114,13 @@ function Register({
                         placeholder="don't tell!"
                     />
                 </FormGroup>
-                <Button color="success">Sign-Up</Button>
+                <Button
+                    color="success"
+                    type="submit"
+                    className="w-75 mx-auto btn-block"
+                >
+                    Sign-Up
+                </Button>
             </Form>
         </div>
     );

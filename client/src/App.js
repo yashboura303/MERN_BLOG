@@ -3,13 +3,15 @@ import "./sass/App.scss";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import NavBar from "./components/navbar";
+import ColorScheme from "./components/colorScheme";
 import Login from "./components/login";
+import Footer from "./components/footer";
 import Home from "./components/home";
 import AddBlog from "./components/addBlog";
 import Register from "./components/register";
 import UserBlogs from "./components/userBlogs";
 import Blog from "./components/blog";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "./sass/App.scss";
 
 const routing = props => {
     return (
@@ -28,8 +30,11 @@ const routing = props => {
 function App(props) {
     return (
         <BrowserRouter>
-            <NavBar />
-            {routing(props)}
+            <ColorScheme>
+                <NavBar />
+                {routing(props)}
+                <Footer />
+            </ColorScheme>
         </BrowserRouter>
     );
 }

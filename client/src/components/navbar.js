@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Collapse, Navbar, NavbarToggler, Nav, NavItem } from "reactstrap";
+import {
+    Collapse,
+    Navbar,
+    NavbarToggler,
+    Nav,
+    NavItem,
+    Button,
+} from "reactstrap";
 import Cookie from "js-cookie";
 import { connect } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
@@ -7,7 +14,7 @@ import { logoutAction, loginAction } from "../redux/actions.js";
 import { ReactComponent as ReactLogo } from "./svgs/blog.svg";
 
 function NavComponent({ loginAction, logoutAction, isLoggedIn, user }) {
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
     const history = useHistory();
     const toggle = () => setIsOpen(!isOpen);
     useEffect(() => {
@@ -23,8 +30,8 @@ function NavComponent({ loginAction, logoutAction, isLoggedIn, user }) {
             <Navbar color="dark" dark expand="md">
                 <Link className="navbar-brand" to="/">
                     <div className="row whiteDiv">
-                        <ReactLogo className="ml-2 my-auto" />
-                        <h3 className="d-inline my-auto ml-2">MERN Blog</h3>
+                        <ReactLogo className="ml-2 ml-sm-5 my-auto" />
+                        <h3 className="d-inline my-auto ml-2">Blogify</h3>
                     </div>
                 </Link>
                 <NavbarToggler onClick={toggle} />
@@ -49,17 +56,19 @@ function NavComponent({ loginAction, logoutAction, isLoggedIn, user }) {
                 <Nav className=" ml-auto" navbar>
                     <NavItem className="my-auto text-white mx-2">
                         <h5 className="d-inline">
-                            Welcome {`${Cookie.get("username")}`}!
+                            Hi {`${Cookie.get("username")}`}!
                         </h5>
+                    </NavItem>
+
+                    <NavItem>
+                        <Link className="nav-link" to="/addBlog">
+                            {/* <h5 className="d-inline">Add Blog</h5> */}
+                            <Button color="info d-inline">Write a Blog</Button>
+                        </Link>
                     </NavItem>
                     <NavItem>
                         <Link className="nav-link" to={`/blogs/${user._id}`}>
                             <h5 className="d-inline">Your Blogs</h5>
-                        </Link>
-                    </NavItem>
-                    <NavItem>
-                        <Link className="nav-link" to="/addBlog">
-                            <h5 className="d-inline">Add Blog</h5>
                         </Link>
                     </NavItem>
                     <NavItem>
@@ -74,9 +83,9 @@ function NavComponent({ loginAction, logoutAction, isLoggedIn, user }) {
             );
         }
         return (
-            <Nav className=" ml-auto" navbar>
+            <Nav className=" ml-auto mr-sm-4" navbar>
                 <NavItem>
-                    <Link className="nav-link" to="/login">
+                    <Link className="nav-link mr-sm-4" to="/login">
                         <h5 className="d-inline">Login</h5>
                     </Link>
                 </NavItem>

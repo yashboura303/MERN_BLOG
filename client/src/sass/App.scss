@@ -1,19 +1,108 @@
+@import "_custom.scss";
+@import "_loginregister.scss";
+
+* {
+    padding: 0;
+    margin: 0;
+}
+html {
+    height: 100%;
+}
+body {
+    min-height: 100%;
+}
+.light-mode {
+    background-color: #eef0f1;
+    color: #333;
+    transition: background-color 0.25s ease-out;
+    .login,
+    .register {
+        background-color: white;
+        transition: background-color 0.25s ease-out;
+    }
+    .footer,
+    .navbar {
+        background-color: $dark-blue !important;
+        transition: background-color 0.25s ease-out;
+    }
+}
+
+.dark-mode {
+    transition: background-color 0.25s ease-out;
+    background-color: #1a1919;
+    color: rgb(54, 54, 54);
+    .login,
+    .register {
+        transition: background-color 0.25s ease-out;
+        background-color: #272727;
+        h1,
+        label {
+            color: white;
+        }
+        box-shadow: 0 0 0 1px #424242;
+        .btn {
+            background-color: #069;
+            border-color: #069;
+        }
+        input {
+            background-color: #3f3e3e;
+            border: 1px solid #525353;
+        }
+        .form-control:focus {
+            color: white;
+            border: 2px solid #171818;
+        }
+    }
+    .footer,
+    .navbar {
+        background-color: #050505 !important;
+        transition: background-color 0.25s ease-out;
+    }
+}
+.navbar {
+    .navbar-nav {
+        .nav-item {
+            align-self: center;
+        }
+        .btn {
+            background-color: $add-blog;
+            border-color: $add-blog;
+        }
+    }
+}
+
+.float-btn {
+    &:active {
+        transform: scale(0.8) !important;
+    }
+
+    transition: all 0.1s ease;
+    cursor: pointer;
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 40px;
+    right: 40px;
+    z-index: 999;
+    text-align: center;
+}
+
 a:hover {
-	cursor: pointer;
+    cursor: pointer;
 }
 .button-link {
-	background: none !important;
-	border: none;
-	color: #069;
-	cursor: pointer;
+    background: none !important;
+    border: none;
+    color: #069;
+    cursor: pointer;
 }
 textarea {
-	height: 100%;
+    height: 100%;
 }
 Spinner {
-	width: 5rem;
-	height: 5rem;
+    width: 5rem;
+    height: 5rem;
 }
-.pointer{
-	cursor: pointer;
+.pointer {
+    cursor: pointer;
 }

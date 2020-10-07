@@ -1,0 +1,12 @@
+// Custom.scss
+// Option A: Include all of Bootstrap
+$theme-colors: (
+    "primary": #0074d9,
+    "danger": #ff4136,
+    "success": #00308f,
+    "info": #4b0082,
+    "dark": #13274f,
+);
+$dark-blue: #13274f;
+$add-blog: #72a0c1;
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";

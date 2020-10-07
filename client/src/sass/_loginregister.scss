@@ -1,0 +1,31 @@
+.form-control {
+    transition: 0.1s;
+}
+.form-control:focus {
+    color: #000;
+    background-color: #fff;
+    border: 2px solid #00308f;
+    outline: 0;
+    box-shadow: none;
+}
+
+.login,
+.register {
+    h1 {
+        font-weight: 900;
+    }
+    label {
+        font-weight: 600;
+    }
+    border-radius: 5px;
+    box-shadow: 0 0 0 1px #ccc;
+    svg {
+        vertical-align: text-bottom;
+    }
+}
+@media screen and (max-width: 720px) {
+    .login,
+    .register {
+        width: 80% !important;
+    }
+}
