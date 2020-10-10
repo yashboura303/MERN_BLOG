@@ -3,11 +3,11 @@ import "./sass/App.scss";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import NavBar from "./components/navbar";
-import ColorScheme from "./components/colorScheme";
+import DarkModeToggle from "./components/darkModeToggle";
 import Login from "./components/login";
 import Footer from "./components/footer";
 import Home from "./components/home";
-import AddBlog from "./components/addBlog";
+import WriteBlog from "./components/writeBlog";
 import Register from "./components/register";
 import UserBlogs from "./components/userBlogs";
 import Blog from "./components/blog";
@@ -17,7 +17,7 @@ const routing = props => {
     return (
         <Switch>
             <Route path="/" exact component={Home}></Route>
-            <Route path="/addBlog" exact component={AddBlog}></Route>
+            <Route path="/addBlog" exact component={WriteBlog}></Route>
             <Route path="/blogs/:id" exact component={UserBlogs}></Route>
             <Route path="/blog/:blog_id" exact component={Blog}></Route>
             <Route path="/login" exact component={Login}></Route>
@@ -30,11 +30,10 @@ const routing = props => {
 function App(props) {
     return (
         <BrowserRouter>
-            <ColorScheme>
-                <NavBar />
-                {routing(props)}
-                <Footer />
-            </ColorScheme>
+            <NavBar />
+            {routing(props)}
+            <DarkModeToggle />
+            <Footer />
         </BrowserRouter>
     );
 }
