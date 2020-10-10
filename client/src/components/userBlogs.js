@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Button, Modal, ModalHeader, ModalFooter, Spinner } from "reactstrap";
+import {
+    Button,
+    Modal,
+    ModalHeader,
+    ModalFooter,
+    Spinner,
+    Container,
+} from "reactstrap";
 import Cookie from "js-cookie";
+
 const axios = require("axios");
 const moment = require("moment");
 
@@ -78,16 +86,16 @@ function UserBlogs(props) {
             return <p className="text-center">You have currently no blogs</p>;
         if (blogs.length > 0) {
             return (
-                <div>
+                <div style={{ height: "70vh" }} className="mt-3 user-blogs">
                     {blogs.map(blog => (
                         <div
                             className="container border border-dark m-2 p-2"
                             key={blog._id}
                         >
-                            <h4 className="text-primary text-monospace font-weight-bold">
+                            <h4 className="text-monospace font-weight-bold">
                                 {blog.title}
                             </h4>
-                            <p>{blog.body}</p>
+                            {/* <p>{blog.body}</p> */}
                             <div className="container row justify-content-between">
                                 <p className="badge badge-dark">
                                     {moment(blog.date).format("Do MMMM, YYYY")}
