@@ -41,6 +41,11 @@ body.dark-mode {
     transition: background-color 0.25s ease-out;
     background-color: #1a1919;
     color: rgb(54, 54, 54);
+    .user-blogs {
+        h4 {
+            color: white;
+        }
+    }
     .login,
     .register {
         transition: background-color 0.25s ease-out;

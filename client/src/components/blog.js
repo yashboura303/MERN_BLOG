@@ -9,7 +9,9 @@ import {
     Input,
     ListGroup,
     ListGroupItem,
+    Container,
 } from "reactstrap";
+var parse = require("html-react-parser");
 const moment = require("moment");
 const axios = require("axios");
 
@@ -181,15 +183,16 @@ function Blog(props) {
         );
     };
     return (
-        <div className="container-fluid p-3">
-            <h3 className="text-center text-primary ">{userBlog.title}</h3>
+        <div className="container-fluid p-3 bg-white">
+            <h1 className="text-center  ">{userBlog.title}</h1>
             <p className="text-secondary" style={{ fontSize: "0.9rem" }}>
                 By{" "}
                 {userBlog.user ? <strong>{userBlog.user.username}</strong> : ""}
                 ,{moment(userBlog.date).format(" Do MMMM, YYYY")}{" "}
             </p>
             <hr></hr>
-            <p style={{ fontSize: "1.1rem" }}>{userBlog.body}</p>
+            {/* <p style={{ fontSize: "1.1rem" }}>{userBlog.body}</p> */}
+            <Container>{parse(`${userBlog.body}`)}</Container>
             {Cookie.get("user") ? null : (
                 <p className="font-italic font-weight-bold mt-2">
                     Login To Comment and Like!
