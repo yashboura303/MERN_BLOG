@@ -1,6 +1,14 @@
 const Blog = require("../models/blog.js");
 const { blogValidation } = require("./validationSchemas/index.js");
 
+exports.uploadImage = async (req, res, next) => {
+    try {
+        res.json({ location: req.files[0].path });
+    } catch (e) {
+        res.json(e);
+    }
+};
+
 exports.getBlogs = async (req, res, next) => {
     const blogs = await Blog.find({})
         .populate("comment")

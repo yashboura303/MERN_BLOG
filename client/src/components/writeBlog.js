@@ -101,6 +101,7 @@ function WriteBlog({
                             "undo redo | formatselect | bold italic backcolor | \
               alignleft aligncenter alignright alignjustify | \
               bullist numlist outdent indent | removeformat | emoticons | image imagetools | help",
+                        images_upload_url: "api/blogs/uploadImage",
                         imagetools_toolbar:
                             "rotateleft rotateright | flipv fliph | editimage imageoptions",
                     }}
