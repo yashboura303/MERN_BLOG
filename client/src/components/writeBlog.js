@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Button, FormGroup, Label, Input } from "reactstrap";
 import { connect } from "react-redux";
-import Cookie from "js-cookie";
 import { Editor } from "@tinymce/tinymce-react";
 
 import {
@@ -23,13 +22,13 @@ function WriteBlog({
     const [blogBody, setBlogBody] = useState("");
     const onTitleChange = e => setTitle(e.target.value);
     useEffect(() => {
-        if (!Cookie.get("user")) {
+        if (!localStorage.getItem("user")) {
             history.push("/");
         }
         clearAlertAction();
     }, [history, clearAlertAction]);
     const createBlog = async () => {
-        const user_id = JSON.parse(Cookie.get("user"));
+        const user_id = JSON.parse(localStorage.getItem("user"));
         await axios({
             method: "post",
             url: "/api/blogs",
@@ -39,7 +38,7 @@ function WriteBlog({
                 user: user_id._id,
             },
             headers: {
-                Authorization: "Bearer " + Cookie.get("token"),
+                Authorization: "Bearer " + localStorage.getItem("token"),
             },
         })
             .then(response => {
@@ -87,9 +86,65 @@ function WriteBlog({
                 <Editor
                     init={{
                         height: 500,
+                        branding: false,
                         apiKey:
                             "czrmon8ekni27okahwzw67egeqpotxcnb3yt75qzs44bdbpq",
                         menubar: "view insert",
+                        style_formats: [
+                            {
+                                title: "Headings",
+                                items: [
+                                    { title: "Heading 1", format: "h2" },
+                                    { title: "Heading 2", format: "h3" },
+                                    { title: "Heading 3", format: "h4" },
+                                    { title: "Heading 4", format: "h5" },
+                                    { title: "Heading 5", format: "h6" },
+                                ],
+                            },
+                            {
+                                title: "Inline",
+                                items: [
+                                    { title: "Bold", format: "bold" },
+                                    { title: "Italic", format: "italic" },
+                                    { title: "Underline", format: "underline" },
+                                    {
+                                        title: "Strikethrough",
+                                        format: "strikethrough",
+                                    },
+                                    {
+                                        title: "Superscript",
+                                        format: "superscript",
+                                    },
+                                    { title: "Subscript", format: "subscript" },
+                                    { title: "Code", format: "code" },
+                                ],
+                            },
+                            {
+                                title: "Blocks",
+                                items: [
+                                    { title: "Paragraph", format: "p" },
+                                    {
+                                        title: "Blockquote",
+                                        format: "blockquote",
+                                    },
+                                    { title: "Div", format: "div" },
+                                    { title: "Pre", format: "pre" },
+                                ],
+                            },
+                            {
+                                title: "Align",
+                                items: [
+                                    { title: "Left", format: "alignleft" },
+                                    { title: "Center", format: "aligncenter" },
+                                    { title: "Right", format: "alignright" },
+                                    {
+                                        title: "Justify",
+                                        format: "alignjustify",
+                                    },
+                                ],
+                            },
+                        ],
+
                         plugins: [
                             "advlist autolink lists link image charmap print preview ",
                             "emoticons",
@@ -98,9 +153,7 @@ function WriteBlog({
                         ],
                         automatic_uploads: true,
                         toolbar:
-                            "undo redo | formatselect | bold italic backcolor | \
-              alignleft aligncenter alignright alignjustify | \
-              bullist numlist outdent indent | removeformat | emoticons | image imagetools | help",
+                            "undo redo | formatselect | bold italic backcolor |  alignleft aligncenter alignright alignjustify |  bullist numlist outdent indent | removeformat | emoticons | image imagetools | code | help",
                         images_upload_url: "api/blogs/uploadImage",
                         imagetools_toolbar:
                             "rotateleft rotateright | flipv fliph | editimage imageoptions",

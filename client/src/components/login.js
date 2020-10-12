@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { RiLockPasswordLine, RiUserLine } from "react-icons/ri";
-import Cookie from "js-cookie";
 import { connect } from "react-redux";
 import { loginAction } from "../redux/actions.js";
 import { errorAlertAction, clearAlertAction } from "../redux/actions.js";
@@ -19,7 +18,7 @@ function Login({ clearAlertAction, errorAlertAction, loginAction, history }) {
 
     useEffect(() => {
         clearAlertAction();
-        if (Cookie.get("user")) {
+        if (localStorage.getItem("user")) {
             history.push("/");
         }
     }, [clearAlertAction, history]);
@@ -33,9 +32,12 @@ function Login({ clearAlertAction, errorAlertAction, loginAction, history }) {
             },
         })
             .then(response => {
-                Cookie.set("token", response.data.token);
-                Cookie.set("user", JSON.stringify(response.data.user));
-                Cookie.set("username", response.data.user.username);
+                localStorage.setItem(
+                    "user",
+                    JSON.stringify(response.data.user)
+                );
+                localStorage.setItem("token", response.data.token);
+                localStorage.setItem("username", response.data.user.username);
                 loginAction(response.data.user);
                 history.push("/");
             })

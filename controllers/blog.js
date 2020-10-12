@@ -56,6 +56,19 @@ exports.getBlogByID = async (req, res) => {
         res.status(401).json(error);
     }
 };
+exports.updateBlog = async (req, res) => {
+    const blog_id = req.params.blog_id;
+    const updated_blog = {
+        title: req.body.title,
+        body: req.body.body,
+    };
+    try {
+        const blog = await Blog.findByIdAndUpdate(blog_id, updated_blog);
+        res.json(blog);
+    } catch (error) {
+        res.status(401).json(error);
+    }
+};
 
 exports.likeBlog = async (req, res) => {
     const blog_id = req.params.blog_id;
@@ -95,24 +108,3 @@ exports.deleteBlog = async (req, res, next) => {
         res.json(blog);
     });
 };
-
-// exports.likeBlog = async (req, res) => {
-//   const blog_id = req.params.blog_id;
-//   const user_id = req.body.user_id;
-//   await Blog.findByIdAndUpdate(
-//     blog_id,
-//     {
-//       $push: {
-//         likes: {
-//           user: user_id,
-//         },
-//       },
-//     },
-//     { new: true },
-//     (err, newBlog) => {
-//       if (err) res.status(422).json(err);
-//       console.log(newBlog);
-//       res.json(newBlog.likes);
-//     }
-//   );
-// };

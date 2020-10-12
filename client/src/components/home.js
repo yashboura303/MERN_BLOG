@@ -3,6 +3,7 @@ import { Spinner } from "reactstrap";
 import { ReactComponent as LikeIcon } from "./svgs/heart.svg";
 import { Link } from "react-router-dom";
 import { ReactComponent as DateIcon } from "./svgs/date.svg";
+import Alert from "./alert";
 const axios = require("axios");
 const moment = require("moment");
 
@@ -15,7 +16,6 @@ function Home() {
             url: "/api/blogs",
         })
             .then(response => {
-                console.log(response.data);
                 setBlogs(response.data);
                 setFetched(true);
             })
@@ -33,6 +33,7 @@ function Home() {
         if (blogs.length > 0) {
             return (
                 <div>
+                    <Alert className="mt-2" />
                     {blogs.map(blog => (
                         <div
                             className="container border border-dark m-4 p-2"

@@ -33,6 +33,7 @@ router.post("/blogs/uploadImage", parser.any(), blogs.uploadImage);
 router.post("/blog/addComment/:blog_id", auth, comments.createComment);
 
 router.put("/blog/like/:blog_id", auth, blogs.likeBlog);
+router.put("/blog/updateBlog/:blog_id", auth, blogs.updateBlog);
 router.put("/blog/dislike/:blog_id", auth, blogs.disLikeBlog);
 
 router.delete("/blogs/delete/:_id", auth, blogs.deleteBlog);

@@ -8,11 +8,11 @@ import {
 } from "react-icons/ri";
 
 import { connect } from "react-redux";
-import Cookie from "js-cookie";
 import {
     errorAlertAction,
     successAlertAction,
     clearAlertAction,
+    loginAction,
 } from "../redux/actions.js";
 import Alert from "./alert";
 const axios = require("axios");
@@ -21,6 +21,7 @@ function Register({
     successAlertAction,
     errorAlertAction,
     clearAlertAction,
+    loginAction,
     history,
 }) {
     const [username, setUserName] = useState("");
@@ -35,28 +36,41 @@ function Register({
 
     useEffect(() => {
         clearAlertAction();
-        if (Cookie.get("user")) {
+        if (localStorage.getItem("user")) {
             history.push("/");
         }
     }, [clearAlertAction, history]);
 
     const register = async () => {
-        await axios({
-            method: "post",
-            url: "/api/users",
-            data: {
-                username,
-                password,
-                name,
-                email,
-            },
-        })
-            .then(response => {
-                successAlertAction(response.data);
-            })
-            .catch(err => {
-                errorAlertAction(err.response.data);
+        try {
+            const response = await axios({
+                method: "post",
+                url: "/api/users",
+                data: {
+                    username,
+                    password,
+                    name,
+                    email,
+                },
             });
+            localStorage.setItem("user", JSON.stringify(response.data.user));
+            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("username", response.data.user.username);
+            loginAction(response.data.user);
+            successAlertAction(response.data.message);
+            history.push("/");
+        } catch (err) {
+            console.log("Erorororo", err);
+            if (err.response) {
+                console.log("firstt");
+                console.log(err.response.data);
+                errorAlertAction(err.response.data);
+            } else {
+                console.log("second");
+                console.log(err);
+                errorAlertAction(err);
+            }
+        }
     };
 
     const onSubmit = e => {
@@ -126,6 +140,7 @@ function Register({
     );
 }
 export default connect(null, {
+    loginAction,
     successAlertAction,
     errorAlertAction,
     clearAlertAction,

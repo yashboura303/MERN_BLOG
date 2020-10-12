@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Cookie from "js-cookie";
 import { ReactComponent as LikeIcon } from "./svgs/liked.svg";
 import { ReactComponent as DisLikeIcon } from "./svgs/not-liked.svg";
 import {
@@ -27,11 +26,11 @@ function Blog(props) {
             method: "post",
             url: `/api/blog/addComment/${userBlog._id}`,
             headers: {
-                Authorization: "Bearer " + Cookie.get("token"),
+                Authorization: "Bearer " + localStorage.getItem("token"),
             },
             data: {
                 comment,
-                user_name: JSON.parse(Cookie.get("user")).username,
+                user_name: JSON.parse(localStorage.getItem("user")).username,
             },
         })
             .then(response => {
@@ -48,7 +47,7 @@ function Blog(props) {
                 method: "get",
                 url: `/api/blog/${props.match.params.blog_id}`,
                 headers: {
-                    Authorization: "Bearer " + Cookie.get("token"),
+                    Authorization: "Bearer " + localStorage.getItem("token"),
                 },
             })
                 .then(response => {
@@ -86,7 +85,7 @@ function Blog(props) {
     };
 
     const commentBox = () => {
-        if (Cookie.get("user")) {
+        if (localStorage.getItem("user")) {
             return (
                 <>
                     <form onSubmit={submitComment}>
@@ -117,15 +116,15 @@ function Blog(props) {
     };
 
     const likeBlog = () => {
-        if (Cookie.get("user")) {
+        if (localStorage.getItem("user")) {
             axios({
                 method: "put",
                 url: `/api/blog/like/${userBlog._id}`,
                 headers: {
-                    Authorization: "Bearer " + Cookie.get("token"),
+                    Authorization: "Bearer " + localStorage.getItem("token"),
                 },
                 data: {
-                    user_id: JSON.parse(Cookie.get("user"))._id,
+                    user_id: JSON.parse(localStorage.getItem("user"))._id,
                 },
             })
                 .then(response => {
@@ -139,15 +138,15 @@ function Blog(props) {
     };
 
     const disLikeBlog = () => {
-        if (Cookie.get("user")) {
+        if (localStorage.getItem("user")) {
             axios({
                 method: "put",
                 url: `/api/blog/disLike/${userBlog._id}`,
                 headers: {
-                    Authorization: "Bearer " + Cookie.get("token"),
+                    Authorization: "Bearer " + localStorage.getItem("token"),
                 },
                 data: {
-                    user_id: JSON.parse(Cookie.get("user"))._id,
+                    user_id: JSON.parse(localStorage.getItem("user"))._id,
                 },
             })
                 .then(response => {
@@ -164,8 +163,8 @@ function Blog(props) {
     const renderLike = () => {
         let likeIcon = null;
         if (
-            Cookie.get("user") &&
-            currentUserLiked(JSON.parse(Cookie.get("user"))._id)
+            localStorage.getItem("user") &&
+            currentUserLiked(JSON.parse(localStorage.getItem("user"))._id)
         ) {
             likeIcon = (
                 <LikeIcon className="mr-2 pointer" onClick={disLikeBlog} />
@@ -191,9 +190,8 @@ function Blog(props) {
                 ,{moment(userBlog.date).format(" Do MMMM, YYYY")}{" "}
             </p>
             <hr></hr>
-            {/* <p style={{ fontSize: "1.1rem" }}>{userBlog.body}</p> */}
             <Container>{parse(`${userBlog.body}`)}</Container>
-            {Cookie.get("user") ? null : (
+            {localStorage.getItem("user") ? null : (
                 <p className="font-italic font-weight-bold mt-2">
                     Login To Comment and Like!
                 </p>

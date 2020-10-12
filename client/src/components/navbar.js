@@ -7,7 +7,6 @@ import {
     NavItem,
     Button,
 } from "reactstrap";
-import Cookie from "js-cookie";
 import { connect } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { logoutAction, loginAction } from "../redux/actions.js";
@@ -18,8 +17,8 @@ function NavComponent({ loginAction, logoutAction, isLoggedIn, user }) {
     const history = useHistory();
     const toggle = () => setIsOpen(!isOpen);
     useEffect(() => {
-        if (Cookie.get("user")) {
-            loginAction(JSON.parse(Cookie.get("user")));
+        if (localStorage.getItem("user")) {
+            loginAction(JSON.parse(localStorage.getItem("user")));
         } else {
             logoutAction();
         }
@@ -43,9 +42,7 @@ function NavComponent({ loginAction, logoutAction, isLoggedIn, user }) {
     );
 
     function logout() {
-        Cookie.remove("token");
-        Cookie.remove("user");
-        Cookie.remove("username");
+        localStorage.clear();
         logoutAction();
         history.push("/");
     }
@@ -56,13 +53,12 @@ function NavComponent({ loginAction, logoutAction, isLoggedIn, user }) {
                 <Nav className=" ml-auto" navbar>
                     <NavItem className="my-auto text-white mx-2">
                         <h5 className="d-inline">
-                            Hi {`${Cookie.get("username")}`}!
+                            Hi {`${localStorage.getItem("username")}`}!
                         </h5>
                     </NavItem>
 
                     <NavItem>
                         <Link className="nav-link" to="/addBlog">
-                            {/* <h5 className="d-inline">Add Blog</h5> */}
                             <Button color="info d-inline">Write a Blog</Button>
                         </Link>
                     </NavItem>

@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {
-    Button,
-    Modal,
-    ModalHeader,
-    ModalFooter,
-    Spinner,
-    Container,
-} from "reactstrap";
-import Cookie from "js-cookie";
+import { Button, Modal, ModalHeader, ModalFooter, Spinner } from "reactstrap";
+import { Link } from "react-router-dom";
 
 const axios = require("axios");
 const moment = require("moment");
@@ -24,7 +17,7 @@ function UserBlogs(props) {
             method: "delete",
             url: `/api/blogs/delete/${blogID}`,
             headers: {
-                Authorization: "Bearer " + Cookie.get("token"),
+                Authorization: "Bearer " + localStorage.getItem("token"),
             },
         })
             .then(response => {
@@ -33,7 +26,8 @@ function UserBlogs(props) {
                         method: "get",
                         url: `/api/blogs/${props.match.params.id}`,
                         headers: {
-                            Authorization: "Bearer " + Cookie.get("token"),
+                            Authorization:
+                                "Bearer " + localStorage.getItem("user"),
                         },
                     })
                         .then(response => {
@@ -59,7 +53,7 @@ function UserBlogs(props) {
         deleteBlog();
     };
     useEffect(() => {
-        if (!Cookie.get("user")) {
+        if (!localStorage.getItem("user")) {
             props.history.push("/");
         }
         async function fetchUserBlogs() {
@@ -67,7 +61,7 @@ function UserBlogs(props) {
                 method: "get",
                 url: `/api/blogs/${props.match.params.id}`,
                 headers: {
-                    Authorization: "Bearer " + Cookie.get("token"),
+                    Authorization: "Bearer " + localStorage.getItem("token"),
                 },
             })
                 .then(response => {
@@ -89,24 +83,36 @@ function UserBlogs(props) {
                 <div style={{ height: "70vh" }} className="mt-3 user-blogs">
                     {blogs.map(blog => (
                         <div
-                            className="container border border-dark m-2 p-2"
+                            className="container  m-3 p-2 user-blogs-card"
                             key={blog._id}
                         >
-                            <h4 className="text-monospace font-weight-bold">
-                                {blog.title}
-                            </h4>
+                            <Link to={`/blog/${blog._id}`}>
+                                <h4 className="text-monospace font-weight-bold d-inline-block">
+                                    {blog.title}
+                                </h4>
+                            </Link>
+                            <br></br>
+                            <p className="badge badge-dark">
+                                {moment(blog.date).format("Do MMMM, YYYY")}
+                            </p>
                             {/* <p>{blog.body}</p> */}
-                            <div className="container row justify-content-between">
-                                <p className="badge badge-dark">
-                                    {moment(blog.date).format("Do MMMM, YYYY")}
-                                </p>
+                            <div className="container row justify-content-end">
                                 <button
                                     type="button"
-                                    className="btn btn-danger btn-sm"
+                                    className="btn btn-danger btn-sm mr-2"
                                     onClick={() => setIDtoDelete(blog._id)}
                                 >
                                     Delete
                                 </button>
+                                <Link to={`/blog/edit/${blog._id}`}>
+                                    <button
+                                        type="button"
+                                        className="btn btn-secondary btn-sm"
+                                        onClick={() => setIDtoDelete(blog._id)}
+                                    >
+                                        Edit
+                                    </button>
+                                </Link>
                             </div>
                         </div>
                     ))}

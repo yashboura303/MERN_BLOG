@@ -20,6 +20,11 @@ const routing = props => {
             <Route path="/addBlog" exact component={WriteBlog}></Route>
             <Route path="/blogs/:id" exact component={UserBlogs}></Route>
             <Route path="/blog/:blog_id" exact component={Blog}></Route>
+            <Route
+                path="/blog/edit/:blog_id"
+                exact
+                component={WriteBlog}
+            ></Route>
             <Route path="/login" exact component={Login}></Route>
             <Route path="/signup" exact component={Register}></Route>
             <Redirect to="/"></Redirect>
