@@ -12,6 +12,7 @@ import Register from "./components/register";
 import UserBlogs from "./components/userBlogs";
 import Blog from "./components/blog";
 import "./sass/App.scss";
+import EditBlog from "./components/editBlog";
 
 const routing = props => {
     return (
@@ -23,7 +24,7 @@ const routing = props => {
             <Route
                 path="/blog/edit/:blog_id"
                 exact
-                component={WriteBlog}
+                component={EditBlog}
             ></Route>
             <Route path="/login" exact component={Login}></Route>
             <Route path="/signup" exact component={Register}></Route>

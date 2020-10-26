@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ReactComponent as LikeIcon } from "./svgs/liked.svg";
+import { Spinner } from "reactstrap";
 import { ReactComponent as DisLikeIcon } from "./svgs/not-liked.svg";
 import {
     Button,
@@ -16,6 +17,7 @@ const axios = require("axios");
 
 function Blog(props) {
     const [userBlog, setBlog] = useState({});
+    const [fetched, setFetched] = useState(false);
     const [comments, setComments] = useState([]);
     const [likes, setLikes] = useState([]);
     const [comment, setComment] = useState("");
@@ -43,7 +45,6 @@ function Blog(props) {
                 console.log(err.response.data);
             });
     };
-
     useEffect(() => {
         async function fetchUserBlog() {
             await axios({
@@ -57,6 +58,7 @@ function Blog(props) {
                     setBlog(response.data);
                     setComments(response.data.comments);
                     setLikes(response.data.likes);
+                    setFetched(true);
                 })
                 .catch(err => {
                     console.log(err.response);
@@ -67,12 +69,16 @@ function Blog(props) {
 
     const renderComments = () => {
         const renderedComments = comments.map(comment => (
-            <ListGroupItem className="bg-light" key={comment._id}>
-                {comment.comment}
-                <p style={{ fontSize: "0.8rem" }}>
-                    By {comment.user},{" "}
-                    {moment(comment.date).format(" Do MMMM, YYYY")}{" "}
+            <ListGroupItem className=" comment mb-2" key={comment._id}>
+                <p>
+                    <span className="username float-left text-capitalize">
+                        {comment.user},
+                    </span>
+                    <span className="date float-right">
+                        {moment(comment.date).format(" Do MMMM, YYYY")}{" "}
+                    </span>
                 </p>
+                <p className="comment-body mt-4 mb-0">{comment.comment}</p>
             </ListGroupItem>
         ));
         if (renderedComments.length) {
@@ -184,6 +190,13 @@ function Blog(props) {
             </div>
         );
     };
+    if (!fetched) {
+        return (
+            <div className="text-center spin">
+                <Spinner color="primary" />
+            </div>
+        );
+    }
     return (
         <div className="container-fluid p-3 p-sm-5 bg-white">
             <h1 className="text-center  ">{userBlog.title}</h1>

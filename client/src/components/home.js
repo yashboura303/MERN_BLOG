@@ -50,21 +50,24 @@ function Home(props) {
 
                     {blogs.map(blog => (
                         <div
-                            className="container border border-dark m-4 p-2"
+                            className="container mx-auto border border-dark m-4 pt-2 blogs-card"
                             key={blog._id}
                         >
                             <Link to={`/blog/${blog._id}`}>
-                                <h4 className="text-primary text-monospace font-weight-bold pointer">
+                                <h4 className="  text-monospace font-weight-bold pointer">
                                     {blog.title}
                                 </h4>
                             </Link>
 
-                            <div className="container row justify-content-between">
-                                <p style={{ fontSize: "0.9rem" }}>
+                            <div
+                                className="container-fluid mb-0 pb-0 mt-4 row justify-content-between"
+                                style={{ fontSize: "0.9rem" }}
+                            >
+                                <p className="mb-2">
                                     <DateIcon /> -
                                     {moment(blog.date).format("Do MMMM, YYYY")}
                                 </p>
-                                <p style={{ fontSize: "0.9rem" }}>
+                                <p className="mb-2">
                                     <LikeIcon /> {blog.likes.length}
                                 </p>
                             </div>

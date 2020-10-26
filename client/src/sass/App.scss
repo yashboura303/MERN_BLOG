@@ -1,5 +1,6 @@
 @import "_custom.scss";
 @import "_writeBlog.scss";
+@import "_blog.scss";
 @import "_userBlogs.scss";
 @import "_loginregister.scss";
 
@@ -15,33 +16,7 @@ body {
     min-height: 100%;
     position: relative;
 }
-.footer {
-    clear: both;
-    position: relative;
-    height: 15vh;
-    margin-top: 10vh;
-    .mongo,
-    .react,
-    .nodejs,
-    .heroku {
-        font-size: clamp(16px, 5vw, 24px);
-    }
-    .mongo {
-        color: lightgreen;
-    }
-    .react {
-        color: lightseagreen;
-    }
-    .nodejs {
-        color: green;
-    }
-    .heroku {
-        color: purple;
-    }
-    a {
-        color: rgb(5, 168, 168);
-    }
-}
+
 body.light-mode {
     background-color: #eef0f1;
     color: #333;
@@ -108,6 +83,18 @@ body.dark-mode {
             }
         }
     }
+    .blogs-card,
+    .comment {
+        background-color: $grey;
+        color: white;
+        h4 {
+            color: #eef0f1;
+        }
+        .username,
+        .date {
+            color: rgb(163, 160, 160);
+        }
+    }
 }
 .navbar {
     .navbar-nav {
@@ -155,4 +142,31 @@ Spinner {
 }
 .pointer {
     cursor: pointer;
+}
+.footer {
+    clear: both;
+    position: relative;
+    height: 15vh;
+    margin-top: 10vh;
+    .mongo,
+    .react,
+    .nodejs,
+    .heroku {
+        font-size: clamp(16px, 5vw, 24px);
+    }
+    .mongo {
+        color: lightgreen;
+    }
+    .react {
+        color: lightseagreen;
+    }
+    .nodejs {
+        color: green;
+    }
+    .heroku {
+        color: purple;
+    }
+    a {
+        color: rgb(5, 168, 168);
+    }
 }

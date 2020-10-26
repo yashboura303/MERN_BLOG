@@ -1,8 +1,14 @@
-.user-blogs {
+.blogs-card {
+    border-radius: 5px;
+    a {
+        text-decoration: none;
+    }
+    h4 {
+        position: relative;
+        display: inline-block;
+    }
     h4:hover {
         cursor: pointer;
-        color: rgb(92, 91, 91);
-        position: relative;
     }
 
     h4::after {
@@ -20,11 +26,19 @@
     h4:hover::after {
         left: 0;
         right: auto;
-        width: 90%;
+        width: 100%;
     }
-    .user-blogs-card {
-        border-radius: 7px;
-        border: 2px solid #ccc;
-        background-color: white;
+}
+.comment {
+    border: 2px solid #525353;
+    border-top-width: 2px !important;
+    .username,
+    .date {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: rgb(110, 109, 109);
+    }
+    p {
+        display: block;
     }
 }
