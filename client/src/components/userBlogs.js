@@ -77,7 +77,14 @@ function UserBlogs(props) {
 
     function showBlogs() {
         if (blogs.length === 0 && fetched)
-            return <p className="text-center">You have currently no blogs</p>;
+            return (
+                <h2
+                    className="text-center pt-5 no-blogs-heading"
+                    style={{ height: "70vh" }}
+                >
+                    You have currently no blogs, write a blog now!
+                </h2>
+            );
         if (blogs.length > 0) {
             return (
                 <div style={{ height: "70vh" }} className="mt-3 user-blogs">
