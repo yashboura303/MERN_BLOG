@@ -19,9 +19,12 @@ function Blog(props) {
     const [comments, setComments] = useState([]);
     const [likes, setLikes] = useState([]);
     const [comment, setComment] = useState("");
-    const commentChange = e => setComment(e.target.value);
+    const commentChange = e => {
+        setComment(e.target.value);
+    };
     const submitComment = e => {
         e.preventDefault();
+        setComment("");
         axios({
             method: "post",
             url: `/api/blog/addComment/${userBlog._id}`,
@@ -105,7 +108,7 @@ function Blog(props) {
                         <Button
                             type="submit"
                             color="success"
-                            className="btn-sm mt-1"
+                            className="btn-sm mt-1 mb-4"
                         >
                             Submit
                         </Button>
@@ -182,7 +185,7 @@ function Blog(props) {
         );
     };
     return (
-        <div className="container-fluid p-3 bg-white">
+        <div className="container-fluid p-3 p-sm-5 bg-white">
             <h1 className="text-center  ">{userBlog.title}</h1>
             <p className="text-secondary" style={{ fontSize: "0.9rem" }}>
                 By{" "}
@@ -190,15 +193,15 @@ function Blog(props) {
                 ,{moment(userBlog.date).format(" Do MMMM, YYYY")}{" "}
             </p>
             <hr></hr>
-            <Container>{parse(`${userBlog.body}`)}</Container>
+            <Container fluid>{parse(`${userBlog.body}`)}</Container>
             {localStorage.getItem("user") ? null : (
                 <p className="font-italic font-weight-bold mt-2">
                     Login To Comment and Like!
                 </p>
             )}
             {renderLike()}
-            {renderComments()}
             {commentBox()}
+            {renderComments()}
         </div>
     );
 }

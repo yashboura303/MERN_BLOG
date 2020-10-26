@@ -3,13 +3,16 @@ import { Spinner } from "reactstrap";
 import { ReactComponent as LikeIcon } from "./svgs/heart.svg";
 import { Link } from "react-router-dom";
 import { ReactComponent as DateIcon } from "./svgs/date.svg";
+import { clearAlertAction } from "../redux/actions.js";
+import { connect } from "react-redux";
 import Alert from "./alert";
 const axios = require("axios");
 const moment = require("moment");
 
-function Home() {
+function Home(props) {
     const [blogs, setBlogs] = useState([]);
     const [fetched, setFetched] = useState(false);
+    const [showAlert, setAlert] = useState(false);
     const fetchAllBlogs = async () => {
         await axios({
             method: "get",
@@ -26,14 +29,25 @@ function Home() {
     };
     useEffect(() => {
         fetchAllBlogs();
-    }, []);
+        if (props.message !== "") {
+            setAlert(true);
+        }
+    }, [props.message]);
+
+    // function displayAlert() {
+    //     if (showAlert) {
+    //         setAlert(false);
+    //         return <Alert className="mt-2" />;
+    //     }
+    // }
     function showBlogs() {
         if (blogs.length === 0 && fetched)
             return <p className="text-center">Currently no blogs</p>;
         if (blogs.length > 0) {
             return (
                 <div>
-                    <Alert className="mt-2" />
+                    {/* {displayAlert()} */}
+
                     {blogs.map(blog => (
                         <div
                             className="container border border-dark m-4 p-2"
@@ -67,5 +81,11 @@ function Home() {
     }
     return <div className="container-fluid">{showBlogs()}</div>;
 }
+const mapStateToProps = state => {
+    return {
+        type: state.alert.type,
+        message: state.alert.message,
+    };
+};
 
-export default Home;
+export default connect(mapStateToProps, { clearAlertAction })(Home);

@@ -6,7 +6,6 @@ import {
     RiMailLine,
     RiContactsBook2Line,
 } from "react-icons/ri";
-
 import { connect } from "react-redux";
 import {
     errorAlertAction,
