@@ -16,10 +16,10 @@ function EditBlog(props) {
     const [title, setTitle] = useState("");
     const [blogBody, setBlogBody] = useState("");
     const onTitleChange = e => setTitle(e.target.value);
-    const fetchBlog = async () => {
+    const fetchBlog = async blog_id => {
         await axios({
             method: "get",
-            url: `/api/blog/${props.match.params.blog_id}`,
+            url: `/api/blog/${blog_id}`,
             headers: {
                 Authorization: "Bearer " + localStorage.getItem("token"),
             },
@@ -39,8 +39,13 @@ function EditBlog(props) {
             props.history.push("/");
         }
         props.clearAlertAction();
-        fetchBlog();
-    }, [props.history, props.clearAlertAction]);
+        fetchBlog(props.match.params.blog_id);
+    }, [
+        props.history,
+        props.match.params.blog_id,
+        props.clearAlertAction,
+        props,
+    ]);
     const updateBlog = async () => {
         const user_id = JSON.parse(localStorage.getItem("user"));
         await axios({
@@ -57,7 +62,7 @@ function EditBlog(props) {
         })
             .then(response => {
                 console.log(response.data);
-                // successAlertAction("Blog created");
+                successAlertAction("Blog edited");
                 props.history.push(`/blogs/${user_id._id}`);
             })
             .catch(err => {
@@ -169,9 +174,7 @@ function EditBlog(props) {
                         ],
                         automatic_uploads: true,
                         toolbar:
-                            "undo redo | formatselect | bold italic backcolor | \
-              alignleft aligncenter alignright alignjustify | \
-              bullist numlist outdent indent | removeformat | emoticons | image imagetools | code | help",
+                            "undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | emoticons | image magetools | code | help",
                         images_upload_url: "api/blogs/uploadImage",
                         imagetools_toolbar:
                             "rotateleft rotateright | flipv fliph | editimage imageoptions",

@@ -5,14 +5,12 @@ import { Link } from "react-router-dom";
 import { ReactComponent as DateIcon } from "./svgs/date.svg";
 import { clearAlertAction } from "../redux/actions.js";
 import { connect } from "react-redux";
-import Alert from "./alert";
 const axios = require("axios");
 const moment = require("moment");
 
 function Home(props) {
     const [blogs, setBlogs] = useState([]);
     const [fetched, setFetched] = useState(false);
-    const [showAlert, setAlert] = useState(false);
     const fetchAllBlogs = async () => {
         await axios({
             method: "get",
@@ -29,25 +27,14 @@ function Home(props) {
     };
     useEffect(() => {
         fetchAllBlogs();
-        if (props.message !== "") {
-            setAlert(true);
-        }
     }, [props.message]);
 
-    // function displayAlert() {
-    //     if (showAlert) {
-    //         setAlert(false);
-    //         return <Alert className="mt-2" />;
-    //     }
-    // }
     function showBlogs() {
         if (blogs.length === 0 && fetched)
             return <p className="text-center">Currently no blogs</p>;
         if (blogs.length > 0) {
             return (
                 <div>
-                    {/* {displayAlert()} */}
-
                     {blogs.map(blog => (
                         <div
                             className="container mx-auto border border-dark m-4 pt-2 blogs-card"
