@@ -9,15 +9,14 @@ export default function Footer() {
                 <DiMongodb className="mongo mr-1" />
                 <DiNodejsSmall className="nodejs mr-1" />
                 <DiReact className="react mr-1" />
-                <DiHeroku className="heroku" />
-                {/* , for{"  "}
+                <DiHeroku className="heroku" />, for{'  '}
                 <a
-                    href="https://yash-boura.netlify.app/"
+                    href="https://www.yashboura.live/"
                     className="ml-1 d-inline-block"
                 >
-                    {" "}
+                    {' '}
                     Yash Boura
-                </a> */}
+                </a>
             </div>
         </footer>
     );
